@@ -9,4 +9,4 @@ Prototype sketches used in the CS6750 Individual Project evaluation survey.
 
 ## Final evaluation
 - prototype/: clickable study app prototype (open https://sebastiankrawczyk.github.io/cs6750-survey-images/prototype/)
-- survey2_instructions_v1.png: instructions shown in the final evaluation survey
+- survey2_instructions_v2.png: instructions shown in the final evaluation survey (v1 is the earlier version)

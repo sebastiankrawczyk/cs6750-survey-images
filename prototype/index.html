@@ -270,7 +270,7 @@ function renderHome(){
   $('xp').textContent=xp; $('week').textContent=`${week} of 7`; $('duecount').textContent=watched?0:1;
   $('step1').className='step'+(watched?' done':' next'); $('step1').querySelector('.n').textContent=watched?'✓':'1';
   $('step2').className='step'+(watched?' done':''); $('step2').querySelector('.n').textContent=watched?'✓':'2';
-  $('mainbtn').textContent=watched?'Review · questions first · about 3 min':'Start lesson · about 5 min';
+  $('mainbtn').textContent=watched?'Review · questions first · about 3 min':'Start lesson · about 6 min';
   $('lecbtn').textContent=watched?'Review · questions first':'Start lesson';
   $('skiplink').style.display=watched?'none':'block';
   $('lecpill').textContent=watched?'Done today':'New story'; $('lecpill').className='pill'+(watched?' done':'');
