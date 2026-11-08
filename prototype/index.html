@@ -95,7 +95,7 @@
   .cap .cx{font-size:16px;line-height:24px;margin-top:10px;min-height:4.5em;color:var(--ink)}
   .cap .cx.story{font-style:italic}
   .vtools{display:flex;gap:8px;margin-top:12px}
-  .vtools button{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;min-height:46px;border:2px solid var(--line);background:#fff;border-radius:14px;
+  .vtools button{flex:1;white-space:nowrap;padding:0 6px;display:flex;align-items:center;justify-content:center;gap:6px;min-height:46px;border:2px solid var(--line);background:#fff;border-radius:14px;
                  font-size:14px;font-weight:800;cursor:pointer;color:var(--ink);box-shadow:0 3px 0 var(--line)}
   .vtools button:active{transform:translateY(3px);box-shadow:none}
   .chapters{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
@@ -198,10 +198,10 @@
       <div class="cap" id="lvid_cap"><div class="h"></div><div class="s"></div><div class="cx"></div></div>
       <div class="vtools">
         <button onclick="replaySeg()"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>Replay</button>
-        <button onclick="fullscreen('lvid')"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>Full screen</button>
+        <button onclick="fullscreen('lvid')"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>Expand</button>
         <button onclick="endSeg()">Skip<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
       </div>
-      <div class="hint" id="lhint">Watch the scene. A question about it comes right after. Full screen shows the original video with its text panel.</div>
+      <div class="hint" id="lhint">Watch the scene. A question about it comes right after. Expand shows the original video with its text panel.</div>
     </div>
   </section>
 
@@ -212,7 +212,7 @@
       <div class="vbox"><video id="vid" src="assets/slips_story_v2.mp4" playsinline preload="metadata" onclick="toggle('vid')"></video>
         <div class="tap" id="vid_tap" onclick="toggle('vid')"><span><svg width="26" height="26" viewBox="0 0 24 24" fill="#fff"><path d="M8 5.5v13l10.5-6.5z"/></svg></span></div></div>
       <div class="cap" id="vid_cap"><div class="h"></div><div class="s"></div><div class="cx"></div></div>
-      <div class="vtools"><button onclick="toggle('vid')" id="vid_pp">Pause</button><button onclick="fullscreen('vid')"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>Full screen</button></div>
+      <div class="vtools"><button onclick="toggle('vid')" id="vid_pp">Pause</button><button onclick="fullscreen('vid')"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>Expand</button></div>
       <div class="chapters">
         <button onclick="seek(T.s01)">Start</button>
         <button onclick="seek(T.s03)">What is a slip</button>
