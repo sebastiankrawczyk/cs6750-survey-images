@@ -148,11 +148,11 @@
         <div class="head">
           <div class="ring" id="ring"></div>
           <div><div class="sub" style="font-weight:600">Today’s lesson</div><b style="font-size:18px">Slips: action and memory</b>
-            <div class="sub" id="goaltext">Daily goal: 10 questions</div></div>
+            <div class="sub" id="goaltext">Daily goal: 5 questions</div></div>
         </div>
         <div class="steps">
           <div class="step" id="step1"><span class="n">1</span><span><b>Watch the story</b> · 2 min<br><span class="sub">4 short scenes, one question after each</span></span></div>
-          <div class="step" id="step2"><span class="n">2</span><span><b>Practice</b> · 6 questions · 2 min<br><span class="sub">plus a second try on anything you miss</span></span></div>
+          <div class="step" id="step2"><span class="n">2</span><span><b>Practice</b> · 1 new question<br><span class="sub">plus a second try on anything you miss</span></span></div>
         </div>
         <button class="btn primary" id="mainbtn" onclick="mainAction()">Start lesson</button>
         <button class="link" id="skiplink" onclick="startReview()">Skip the story, go to questions</button>
@@ -160,7 +160,7 @@
       <h2 style="margin-top:22px">Lectures</h2>
       <div class="card" onclick="go('lecture')">
         <div class="row" style="justify-content:space-between"><b>Slips: action and memory</b><span class="pill" id="lecpill">New story</span></div>
-        <div class="sub" id="lecsub">Story video and 10 practice questions</div>
+        <div class="sub" id="lecsub">Story video and 5 practice questions</div>
       </div>
       <div class="card off"><b>Mental models</b><div class="sub">Review due tomorrow</div></div>
       <div class="card off"><b>Feedback cycles</b><div class="sub">Up to date</div></div>
@@ -229,7 +229,7 @@
     <div class="top"><button class="x" onclick="leave()" aria-label="Leave lesson"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button><div class="bar"><i id="prog" style="width:0%"></i></div>
       <button class="skip" id="skipq" onclick="skipQ()">Skip</button></div>
     <div class="pad" style="padding-top:0">
-      <div class="qhead"><span id="qcount">Slips · 1/10</span><button class="link" style="margin:0;padding:0" id="watchq" onclick="watchScene()"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5v14l12-7z"/></svg> Watch scene</button></div>
+      <div class="qhead"><span id="qcount">Slips · 1/5</span><button class="link" style="margin:0;padding:0" id="watchq" onclick="watchScene()"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5v14l12-7z"/></svg> Watch scene</button></div>
       <img id="qimg" src="" alt="" style="width:100%;border-radius:12px;display:none;margin-top:10px">
       <div class="q" id="qtext"></div>
       <div id="opts"></div>
@@ -321,7 +321,7 @@ function caption(id){const v=$(id),t=v.currentTime,box=$(id+'_cap');if(!box)retu
 function playFrom(v,t){if(v.readyState>=1)v.currentTime=t;else v.addEventListener('loadedmetadata',()=>{v.currentTime=t;caption(v.id)},{once:true});
   const p=v.play();if(p)p.catch(()=>{$(v.id+'_tap').style.display='grid'});caption(v.id);}
 function toggle(id){const v=$(id);if(v.paused){const p=v.play();if(p)p.catch(()=>{})}else v.pause()}
-const GOAL=10;
+const GOAL=5;
 let watched=false, doneToday=0, xp=120, week=4, weekDone=false;
 let plan=[], step=0, nQ=0, qNo=0, right=0, gained=0, missed=[], last=null, pushed=false, returnTo=null, mode="lesson", segTo=0;
 
@@ -340,18 +340,18 @@ function renderHome(){
   $('xp').textContent=xp; $('week').textContent=`${week} of 7`; $('duecount').textContent=watched?0:1;
   $('step1').className='step'+(watched?' done':' next'); $('step1').querySelector('.n').textContent=watched?'✓':'1';
   $('step2').className='step'+(watched?' done':''); $('step2').querySelector('.n').textContent=watched?'✓':'2';
-  $('mainbtn').textContent=watched?'Review · questions first · about 3 min':'Start lesson · about 6 min';
+  $('mainbtn').textContent=watched?'Review · questions first · about 1 min':'Start lesson · about 3 min';
   $('lecbtn').textContent=watched?'Review · questions first':'Start lesson';
   $('skiplink').style.display=watched?'none':'block';
   $('lecpill').textContent=watched?'Done today':'New story'; $('lecpill').className='pill'+(watched?' done':'');
-  $('lecsub').textContent=watched?'Missed questions come back in your next review':'Story video and 10 practice questions';
+  $('lecsub').textContent=watched?'Missed questions come back in your next review':'Story video and 5 practice questions';
 }
 function mainAction(){watched?startReview():startLesson()}
 
 // ---------- rounds ----------
 function begin(m,p){mode=m;plan=p;step=0;qNo=0;right=0;gained=0;missed=[];nQ=p.filter(s=>s.t==='q').length;runStep()}
-function startLesson(){const p=[];SCENES.forEach((s,k)=>{p.push({t:'scene',k});p.push({t:'q',q:SQ[k]})});PQ.forEach(q=>p.push({t:'q',q}));begin('lesson',p)}
-function startReview(){const order=[PQ[0],SQ[2],PQ[1],SQ[1],PQ[2],SQ[0],PQ[3],SQ[3],PQ[4],PQ[5]];begin('review',order.map(q=>({t:'q',q})))}
+function startLesson(){const p=[];SCENES.forEach((s,k)=>{p.push({t:'scene',k});p.push({t:'q',q:SQ[k]})});p.push({t:'q',q:PQ[0]});begin('lesson',p)}  // prototype: 4 story questions + 1 practice question
+function startReview(){const order=[PQ[0],SQ[2],PQ[1],SQ[1],SQ[3]];begin('review',order.map(q=>({t:'q',q})))}
 function progress(){const w=(step/plan.length*100)+'%';$('prog').style.width=w;$('lprog').style.width=w}
 function runStep(){progress();if(step>=plan.length)return finish();const s=plan[step];s.t==='scene'?playScene(s.k):showQ()}
 function nextStep(){const s=plan[step];if(s&&s.t==='q'){doneToday++;}step++;runStep()}
@@ -422,7 +422,7 @@ renderHome();
   if(h==='wrong'){startLesson();step=8;qNo=4;runStep();answer(0);}
   if(h==='video'){openVideo(T.s06,true);setTimeout(()=>$('vid').pause(),300);}
   if(h==='summary'){startLesson();let g=0;while(step<plan.length&&g++<60){const s=plan[step];if(s.t==='scene'){endSeg();continue}answer(s.second?s.q.a:(step===3||step===10?(s.q.a+1)%4:s.q.a));nextStep();}$('lvid').pause();}
-  if(h==='review'){watched=true;doneToday=10;week=5;weekDone=true;renderHome();}
+  if(h==='review'){watched=true;doneToday=5;week=5;weekDone=true;renderHome();}
 })();
 </script>
 </body>
