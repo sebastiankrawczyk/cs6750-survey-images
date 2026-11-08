@@ -110,7 +110,7 @@
       <div class="today">
         <div class="head">
           <div class="ring" id="ring"></div>
-          <div><div class="sub" style="font-weight:600">Today’s lesson</div><b style="font-size:18px">Errors: slips and mistakes</b>
+          <div><div class="sub" style="font-weight:600">Today’s lesson</div><b style="font-size:18px">Slips: action and memory</b>
             <div class="sub" id="goaltext">Daily goal: 10 questions</div></div>
         </div>
         <div class="steps">
@@ -122,7 +122,7 @@
       </div>
       <h2 style="margin-top:22px">Lectures</h2>
       <div class="card" onclick="go('lecture')">
-        <div class="row" style="justify-content:space-between"><b>Errors: slips and mistakes</b><span class="pill" id="lecpill">New story</span></div>
+        <div class="row" style="justify-content:space-between"><b>Slips: action and memory</b><span class="pill" id="lecpill">New story</span></div>
         <div class="sub" id="lecsub">Story video and 10 practice questions</div>
       </div>
       <div class="card" style="opacity:.6"><b>Mental models</b><div class="sub">Review due tomorrow</div></div>
@@ -132,7 +132,7 @@
 
   <!-- LECTURE HUB -->
   <section class="screen" id="lecture">
-    <div class="top"><button class="x" onclick="go('home')" aria-label="Back">‹</button><b>Errors: slips and mistakes</b></div>
+    <div class="top"><button class="x" onclick="go('home')" aria-label="Back">‹</button><b>Slips: action and memory</b></div>
     <div class="pad" style="padding-top:4px">
       <div class="thumb" onclick="openVideo(0)">
         <img src="assets/v2_s01.jpg" alt="Story video">
@@ -143,7 +143,7 @@
       <button class="btn primary" id="lecbtn" onclick="mainAction()">Start lesson</button>
       <h2 style="margin-top:20px">Topics in this lecture</h2>
       <div class="sub">Tap a topic to watch its scene.</div>
-      <div class="due" onclick="openVideo(T.s03)"><span>Slip vs. mistake</span><span>▶ scene</span></div>
+      <div class="due" onclick="openVideo(T.s03)"><span>What is a slip</span><span>▶ scene</span></div>
       <div class="due" onclick="openVideo(T.s04)"><span>A · Action-based slip</span><span>▶ scene</span></div>
       <div class="due" onclick="openVideo(T.s06)"><span>M · Memory-lapse slip</span><span>▶ scene</span></div>
       <div class="due" onclick="openVideo(T.s10)"><span>Preventing slips</span><span>▶ scene</span></div>
@@ -178,7 +178,7 @@
       <div class="vtools"><button onclick="toggle('vid')" id="vid_pp">❚❚ Pause</button><button onclick="fullscreen('vid')">⛶ Full screen</button></div>
       <div class="chapters">
         <button onclick="seek(T.s01)">Start</button>
-        <button onclick="seek(T.s03)">Slip vs. mistake</button>
+        <button onclick="seek(T.s03)">What is a slip</button>
         <button onclick="seek(T.s04)">A · Action-based slip</button>
         <button onclick="seek(T.s06)">M · Memory-lapse slip</button>
         <button onclick="seek(T.s10)">Preventing slips</button>
@@ -228,49 +228,49 @@
 <script>
 const T={s01:0.0,s02:6.3,s03:19.8,s04:36.1,s05:44.4,s06:60.1,s07:65.8,s08:69.7,s09:75.3,s10:88.7,s11:106.4,s12:109.9}; // scene start times in seconds
 const SCENES=[
- {title:"Slip vs. mistake",from:T.s01,to:T.s04},
+ {title:"What is a slip",from:T.s01,to:T.s04},
  {title:"A · Action-based slip",from:T.s04,to:T.s06},
  {title:"M · Memory-lapse slip",from:T.s06,to:T.s10},
  {title:"Preventing slips and recap",from:T.s10,to:9999}
 ];
-// One question after each scene (story questions)
+// One question after each scene (story questions). All questions are about slips only.
 const SQ=[
- {q:"What makes an error a slip rather than a mistake?",img:"",
-  opts:["The user has the wrong mental model","The user has the right mental model but does the wrong thing anyway","The interface crashes","The user never learned the task"],a:1,
-  term:"Slip vs. mistake",def:"Slip: the user has the right mental model but does the wrong thing anyway. Mistake: the user has the wrong mental model and does the wrong thing as a result.",scene:"s03"},
- {q:"Sam wants to click Save, but his sleepy finger lands on Delete right next to it. Which kind of error is this?",img:"assets/v2_s04.jpg",
-  opts:["Action-based slip","Memory-lapse slip","Rule-based mistake","Knowledge-based mistake"],a:0,
+ {q:"Sam knows exactly what he wants to do, but his sleepy action does not match his goal. What is a slip?",img:"",
+  opts:["Doing the wrong thing even though you know the right thing to do","Not knowing what the right thing to do is","A bug in the app","Skipping a step on purpose"],a:0,
+  term:"What is a slip",def:"A slip happens when you have the right idea of what to do (the right mental model) but do the wrong thing anyway. There are two kinds: action-based slips and memory-lapse slips.",scene:"s03"},
+ {q:"Sam wants to click Save, but his sleepy finger lands on Delete right next to it. Which kind of slip is this?",img:"assets/v2_s04.jpg",
+  opts:["Action-based slip","Memory-lapse slip","Not a slip"],a:0,
   term:"Action-based slip",def:"The user does the wrong action, or the right action on the wrong object, even though they knew the correct action. Memory line: A for Action.",scene:"s04"},
- {q:"Sam puts frozen soup in the microwave, closes the door, and walks back to his desk without pressing Start. Which kind of error is this?",img:"assets/v2_s08.jpg",
-  opts:["Action-based slip","Memory-lapse slip","Knowledge-based mistake","Rule-based mistake"],a:1,
+ {q:"Sam puts frozen soup in the microwave, closes the door, and walks back to his desk without pressing Start. Which kind of slip is this?",img:"assets/v2_s08.jpg",
+  opts:["Action-based slip","Memory-lapse slip","Not a slip"],a:1,
   term:"Memory-lapse slip",def:"The user forgets to do something they knew to do. Memory line: M for Memory.",scene:"s06"},
- {q:"In the memory line “Slips happen in the AM”, what do A and M stand for?",img:"assets/v2_card.jpg",
-  opts:["Action-based and Memory-lapse","Attention and Mistake","Automatic and Manual","Accident and Misclick"],a:0,
+ {q:"In the memory line \u201cSlips happen in the AM\u201d, what do A and M stand for?",img:"assets/v2_card.jpg",
+  opts:["Action-based and Memory-lapse","Attention and Mood","Automatic and Manual","Accident and Misclick"],a:0,
   term:"Slips happen in the AM",def:"A for Action-based slip (doing the wrong thing), M for Memory-lapse slip (forgetting to do the right thing).",scene:"s11"}
 ];
-// Practice questions: new situations, same concepts
+// Practice questions: new situations, slips only
 const PQ=[
- {q:"A “Save changes?” box shows No where Yes usually is. Ana wants to save but clicks No out of habit. Which kind of error is this?",img:"",
-  opts:["Memory-lapse slip","Action-based slip","Knowledge-based mistake","Not an error"],a:1,
+ {q:"A \u201cSave changes?\u201d box shows No where Yes usually is. Ana wants to save but clicks No out of habit. Which kind of slip is this?",img:"",
+  opts:["Memory-lapse slip","Action-based slip","Not a slip"],a:1,
   term:"Action-based slip",def:"Ana knew she wanted to save, but her habit sent her click to the wrong button. Doing the wrong action while knowing the right one is an action-based slip.",scene:"s04"},
- {q:"A box asks “Revert to the original file?” and has no Cancel button. Leo does not understand that reverting throws away his changes, so he picks the wrong option. What is this?",img:"",
-  opts:["Action-based slip","Memory-lapse slip","A mistake, because his mental model of the choice is wrong","Not an error, the interface is fine"],a:2,
-  term:"Slip vs. mistake",def:"Slip: the user has the right mental model but does the wrong thing anyway. Mistake: the user has the wrong mental model and does the wrong thing as a result. Leo never knew which option kept his changes.",scene:"s03"},
- {q:"Priya fills in a long form, then closes the tab without pressing Submit, even though she knew she had to submit it. Which kind of error is this?",img:"",
-  opts:["Rule-based mistake","Action-based slip","Memory-lapse slip","Knowledge-based mistake"],a:2,
+ {q:"Kim plans to record a team meeting. She starts the video call, gets busy talking, and never presses Record. Which kind of slip is this?",img:"",
+  opts:["Action-based slip","Memory-lapse slip","Not a slip"],a:1,
+  term:"Memory-lapse slip",def:"Kim knew she had to press Record, she just forgot to do it. Forgetting a step you knew to do is a memory-lapse slip.",scene:"s09"},
+ {q:"Priya fills in a long form, then closes the tab without pressing Submit, even though she knew she had to submit it. Which kind of slip is this?",img:"",
+  opts:["Action-based slip","Memory-lapse slip","Not a slip"],a:1,
   term:"Memory-lapse slip",def:"Priya knew the step but forgot to do it. Forgetting a step you knew to do is a memory-lapse slip.",scene:"s09"},
  {q:"Which of these describes an action-based slip?",img:"",
-  opts:["Forgetting a step you knew you had to do","Doing the wrong action, or the right action on the wrong object, while knowing the right one","Making the wrong decision even though you read the situation correctly","Misreading the situation in the first place"],a:1,
-  term:"Action-based slip",def:"The user does the wrong action, or the right action on the wrong object, even though they knew the correct action. The other options describe a memory-lapse slip, a rule-based mistake and a knowledge-based mistake.",scene:"s05"},
+  opts:["Forgetting a step you knew you had to do","Doing the wrong action, or the right action on the wrong object, while knowing the right one"],a:1,
+  term:"Action-based slip",def:"The user does the wrong action, or the right action on the wrong object, even though they knew the correct action. Forgetting a step you knew is the other kind, a memory-lapse slip.",scene:"s05"},
  {q:"Which design choice helps prevent a memory-lapse slip?",img:"",
-  opts:["Swapping the order of Yes and No","Making No the default button","Asking “Save changes before closing?” when a file is closed","Hiding the Cancel button"],a:2,
-  term:"Preventing slips",def:"A “Save changes before closing?” prompt reminds the user of the step they forgot, so it prevents a memory-lapse slip. Swapping buttons or making No the default would cause action-based slips.",scene:"s10"},
- {q:"A chat app opens the last conversation by default, so Jo sometimes sends a message to the wrong person. Which fix prevents this without adding steps?",img:"",
-  opts:["Show the recipient's photo on the Send button","Ask “Are you sure?” before every message","Delete the chat history every day","Open a random chat on start"],a:0,
+  opts:["Swapping the order of Yes and No","Making No the default button","Asking \u201cSave changes before closing?\u201d when a file is closed","Hiding the Cancel button"],a:2,
+  term:"Preventing slips",def:"A \u201cSave changes before closing?\u201d prompt reminds the user of the step they forgot, so it prevents a memory-lapse slip. Swapping buttons or making No the default would cause action-based slips.",scene:"s10"},
+ {q:"A chat app opens the last conversation by default, so Jo sometimes sends a message to the wrong person. Which fix prevents this slip without adding steps?",img:"",
+  opts:["Show the recipient's photo on the Send button","Ask \u201cAre you sure?\u201d before every message","Delete the chat history every day","Open a random chat on start"],a:0,
   term:"Preventing slips",def:"Showing who will get the message right on the Send button reminds Jo at the moment of sending, so the slip is caught without making the interaction longer.",scene:"s10"}
 ];
 const CUES=[{"t": 0.35, "e": 5.71, "x": "Meet Sam. It is six in the morning, and Sam has not had his coffee yet.", "k": "story"}, {"t": 6.65, "e": 16.46, "x": "Today's topic is slips. Here is one line to remember. Slips happen in the AM. A, for action-based slips.", "k": "teach"}, {"t": 16.46, "e": 19.21, "x": "And M, for memory-lapse slips.", "k": "teach"}, {"t": 20.15, "e": 27.83, "x": "So, what is a slip? A slip happens when you know the right thing to do, but you do the wrong thing anyway.", "k": "teach"}, {"t": 27.83, "e": 35.51, "x": "A mistake is different. In a mistake, your mental model is wrong, so you never knew the right thing to do.", "k": "teach"}, {"t": 36.45, "e": 43.81, "x": "Sam finishes his report and reaches for Save. But his sleepy finger lands on Delete, right next to it.", "k": "story"}, {"t": 44.75, "e": 46.67, "x": "The report is gone.", "k": "story"}, {"t": 47.12, "e": 49.38, "x": "That is an action-based slip.", "k": "teach"}, {"t": 49.38, "e": 58.35, "x": "Sam did the wrong action, or the right action on the wrong thing, even though he knew exactly what he wanted to do.", "k": "teach"}, {"t": 58.35, "e": 59.44, "x": "A, for action.", "k": "teach"}, {"t": 60.45, "e": 65.17, "x": "Later that morning, Sam takes a frozen soup out of the office freezer.", "k": "story"}, {"t": 66.15, "e": 69.11, "x": "He puts it in the microwave, and closes the door.", "k": "story"}, {"t": 70.05, "e": 74.77, "x": "And then he walks straight back to his desk. He never pressed Start.", "k": "story"}, {"t": 75.65, "e": 79.17, "x": "At lunch, the soup is still frozen solid.", "k": "story"}, {"t": 79.62, "e": 88.1, "x": "That is a memory-lapse slip. Sam knew he had to press Start. He just forgot to do it. M, for memory.", "k": "teach"}, {"t": 89.05, "e": 91.26, "x": "Good design can prevent slips.", "k": "teach"}, {"t": 91.26, "e": 97.37, "x": "A prompt like, save changes before closing, reminds you of a step you might forget.", "k": "teach"}, {"t": 97.37, "e": 105.77, "x": "And keeping Save far away from Delete, with an undo button, makes action-based slips less likely, and less costly.", "k": "teach"}, {"t": 106.75, "e": 109.31, "x": "Finally, Sam gets his coffee.", "k": "story"}, {"t": 110.25, "e": 118.49, "x": "So remember. Slips happen in the AM. A, for action-based. M, for memory-lapse.", "k": "teach"}];
-const HEADS=[{"t": 0.0, "h": "Slips happen in the AM", "s": "Two kinds of slip to remember"}, {"t": 6.3, "h": "Slips happen in the AM", "s": "A = Action-based slip   ·   M = Memory-lapse slip"}, {"t": 19.8, "h": "SLIP vs. MISTAKE", "s": "slip: right mental model, wrong action   ·   mistake: wrong mental model"}, {"t": 36.1, "h": "A (AM)  →  ACTION-BASED SLIP", "s": "wrong action, or the right action on the wrong object"}, {"t": 44.4, "h": "A (AM)  →  ACTION-BASED SLIP", "s": "wrong action, or the right action on the wrong object"}, {"t": 60.1, "h": "M (AM)  →  MEMORY-LAPSE SLIP", "s": "forgetting to do something you knew to do"}, {"t": 65.8, "h": "M (AM)  →  MEMORY-LAPSE SLIP", "s": "forgetting to do something you knew to do"}, {"t": 69.7, "h": "M (AM)  →  MEMORY-LAPSE SLIP", "s": "forgetting to do something you knew to do"}, {"t": 75.3, "h": "M (AM)  →  MEMORY-LAPSE SLIP", "s": "forgetting to do something you knew to do"}, {"t": 88.7, "h": "PREVENTING SLIPS", "s": "remind forgotten steps   ·   keep risky buttons apart   ·   allow undo"}, {"t": 106.4, "h": "Slips happen in the AM", "s": "A = Action-based slip   ·   M = Memory-lapse slip"}, {"t": 109.9, "h": "Slips happen in the AM", "s": "A = Action-based slip   ·   M = Memory-lapse slip"}];
+const HEADS=[{"t": 0.0, "h": "Slips happen in the AM", "s": "Two kinds of slip to remember"}, {"t": 6.3, "h": "Slips happen in the AM", "s": "A = Action-based slip   ·   M = Memory-lapse slip"}, {"t": 19.8, "h": "WHAT IS A SLIP", "s": "right idea of what to do, wrong action anyway"}, {"t": 36.1, "h": "A (AM)  →  ACTION-BASED SLIP", "s": "wrong action, or the right action on the wrong object"}, {"t": 44.4, "h": "A (AM)  →  ACTION-BASED SLIP", "s": "wrong action, or the right action on the wrong object"}, {"t": 60.1, "h": "M (AM)  →  MEMORY-LAPSE SLIP", "s": "forgetting to do something you knew to do"}, {"t": 65.8, "h": "M (AM)  →  MEMORY-LAPSE SLIP", "s": "forgetting to do something you knew to do"}, {"t": 69.7, "h": "M (AM)  →  MEMORY-LAPSE SLIP", "s": "forgetting to do something you knew to do"}, {"t": 75.3, "h": "M (AM)  →  MEMORY-LAPSE SLIP", "s": "forgetting to do something you knew to do"}, {"t": 88.7, "h": "PREVENTING SLIPS", "s": "remind forgotten steps   ·   keep risky buttons apart   ·   allow undo"}, {"t": 106.4, "h": "Slips happen in the AM", "s": "A = Action-based slip   ·   M = Memory-lapse slip"}, {"t": 109.9, "h": "Slips happen in the AM", "s": "A = Action-based slip   ·   M = Memory-lapse slip"}];
 function caption(id){const v=$(id),t=v.currentTime,box=$(id+'_cap');if(!box)return;
   let h=HEADS[0];HEADS.forEach(x=>{if(t>=x.t-0.05)h=x});
   let c=null;CUES.forEach(x=>{if(t>=x.t-0.2&&x.t>=h.t-0.05)c=x});
