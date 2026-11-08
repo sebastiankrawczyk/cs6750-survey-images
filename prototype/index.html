@@ -92,8 +92,8 @@
   .cap{margin-top:12px;background:var(--subtle);color:var(--ink);border-radius:16px;padding:14px 16px;border-left:4px solid var(--muted)}
   .cap .h{font-weight:800;font-size:16px;line-height:22px}
   .cap .s{font-size:14px;color:var(--muted);margin-top:2px;line-height:20px;font-weight:600}
-  .cap .x{font-size:16px;line-height:24px;margin-top:10px;min-height:4.5em;color:var(--ink)}
-  .cap .x.story{font-style:italic}
+  .cap .cx{font-size:16px;line-height:24px;margin-top:10px;min-height:4.5em;color:var(--ink)}
+  .cap .cx.story{font-style:italic}
   .vtools{display:flex;gap:8px;margin-top:12px}
   .vtools button{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;min-height:46px;border:2px solid var(--line);background:#fff;border-radius:14px;
                  font-size:14px;font-weight:800;cursor:pointer;color:var(--ink);box-shadow:0 3px 0 var(--line)}
@@ -195,7 +195,7 @@
       <h2 style="margin:8px 0 10px" id="ltitle"></h2>
       <div class="vbox"><video id="lvid" src="assets/slips_story_v2.mp4" playsinline preload="auto" onclick="toggle('lvid')"></video>
         <div class="tap" id="lvid_tap" onclick="toggle('lvid')"><span><svg width="26" height="26" viewBox="0 0 24 24" fill="#fff"><path d="M8 5.5v13l10.5-6.5z"/></svg></span></div></div>
-      <div class="cap" id="lvid_cap"><div class="h"></div><div class="s"></div><div class="x"></div></div>
+      <div class="cap" id="lvid_cap"><div class="h"></div><div class="s"></div><div class="cx"></div></div>
       <div class="vtools">
         <button onclick="replaySeg()"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>Replay</button>
         <button onclick="fullscreen('lvid')"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>Full screen</button>
@@ -211,7 +211,7 @@
     <div class="pad" style="padding-top:4px">
       <div class="vbox"><video id="vid" src="assets/slips_story_v2.mp4" playsinline preload="metadata" onclick="toggle('vid')"></video>
         <div class="tap" id="vid_tap" onclick="toggle('vid')"><span><svg width="26" height="26" viewBox="0 0 24 24" fill="#fff"><path d="M8 5.5v13l10.5-6.5z"/></svg></span></div></div>
-      <div class="cap" id="vid_cap"><div class="h"></div><div class="s"></div><div class="x"></div></div>
+      <div class="cap" id="vid_cap"><div class="h"></div><div class="s"></div><div class="cx"></div></div>
       <div class="vtools"><button onclick="toggle('vid')" id="vid_pp">Pause</button><button onclick="fullscreen('vid')"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>Full screen</button></div>
       <div class="chapters">
         <button onclick="seek(T.s01)">Start</button>
@@ -316,7 +316,7 @@ function caption(id){const v=$(id),t=v.currentTime,box=$(id+'_cap');if(!box)retu
   let h=HEADS[0];HEADS.forEach(x=>{if(t>=x.t-0.05)h=x});
   let c=null;CUES.forEach(x=>{if(t>=x.t-0.2&&x.t>=h.t-0.05)c=x});
   box.querySelector('.h').textContent=h.h;box.querySelector('.s').textContent=h.s;
-  const xe=box.querySelector('.x');xe.textContent=c?c.x:'';xe.className='x'+(c&&c.k==='story'?' story':'');
+  const xe=box.querySelector('.cx');xe.textContent=c?c.x:'';xe.className='cx'+(c&&c.k==='story'?' story':'');
   box.style.borderLeftColor=h.h.startsWith('A ')?'var(--green)':h.h.startsWith('M ')?'var(--blue)':'#8a94a8';}
 function playFrom(v,t){if(v.readyState>=1)v.currentTime=t;else v.addEventListener('loadedmetadata',()=>{v.currentTime=t;caption(v.id)},{once:true});
   const p=v.play();if(p)p.catch(()=>{$(v.id+'_tap').style.display='grid'});caption(v.id);}
