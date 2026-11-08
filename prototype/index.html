@@ -22,40 +22,58 @@
   h1{font-size:24px;margin:4px 0 2px} h2{font-size:18px;margin:0 0 8px} .sub{color:var(--muted);font-size:14px}
   .row{display:flex;gap:10px;align-items:center}
   .stats{display:flex;gap:10px;margin:14px 0}
-  .stat{flex:1;border:1px solid var(--line);border-radius:14px;padding:10px;text-align:center}
+  .stat{flex:1;border:1px solid var(--line);border-radius:14px;padding:10px 6px;text-align:center}
   .stat b{display:block;font-size:20px} .stat span{font-size:12px;color:var(--muted)}
-  .goal{border-radius:16px;background:var(--amber-soft);padding:14px;display:flex;align-items:center;gap:14px}
   .ring{width:58px;height:58px;border-radius:50%;flex:none;display:grid;place-items:center;font-weight:700;font-size:14px}
   .card{border:1px solid var(--line);border-radius:16px;padding:14px;margin-top:12px;cursor:pointer;background:#fff}
   .card:hover{border-color:#c8d0de}
   .pill{display:inline-block;font-size:12px;padding:3px 9px;border-radius:999px;background:var(--blue-soft);color:var(--blue);font-weight:600}
+  .pill.done{background:var(--green-soft);color:var(--green)}
   .btn{display:block;width:100%;border:0;border-radius:14px;padding:15px;font-size:16px;font-weight:700;cursor:pointer;margin-top:12px}
   .primary{background:var(--green);color:#fff} .secondary{background:var(--blue-soft);color:var(--blue)} .ghost{background:transparent;color:var(--muted);font-weight:600}
+  .link{background:none;border:0;color:var(--blue);font-size:14px;font-weight:600;cursor:pointer;padding:10px 0 0;display:block;margin:0 auto}
   .top{display:flex;align-items:center;gap:12px;padding:10px 16px}
   .x{font-size:22px;cursor:pointer;color:var(--muted);border:0;background:none}
   .bar{flex:1;height:12px;background:var(--line);border-radius:99px;overflow:hidden}
   .bar i{display:block;height:100%;background:var(--green);border-radius:99px;transition:width .3s}
-  .q{font-size:20px;font-weight:700;line-height:1.35;margin:18px 0 18px}
-  .opt{border:2px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px;font-size:16px;cursor:pointer;background:#fff;text-align:left;width:100%}
+  .skip{border:0;background:none;color:var(--muted);font-size:14px;font-weight:600;cursor:pointer}
+  .qhead{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);font-weight:600;margin-top:4px}
+  .q{font-size:20px;font-weight:700;line-height:1.35;margin:10px 0 14px}
+  .opt{border:2px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px;font-size:16px;cursor:pointer;background:#fff;text-align:left;width:100%;color:var(--ink)}
   .opt:hover{border-color:#b9c3d6}
   .opt.correct{border-color:var(--green);background:var(--green-soft)} .opt.wrong{border-color:var(--red);background:var(--red-soft)}
   .opt[disabled]{cursor:default}
-  .feedback{position:absolute;left:0;right:0;bottom:0;padding:18px 20px 24px;border-radius:22px 22px 0 0;display:none}
+  .feedback{position:absolute;left:0;right:0;bottom:0;padding:18px 20px 22px;border-radius:22px 22px 0 0;display:none;max-height:72%;overflow-y:auto;
+            box-shadow:0 -8px 24px rgba(0,0,0,.08)}
   .feedback.good{background:var(--green-soft)} .feedback.bad{background:var(--red-soft)}
   .feedback h3{margin:0 0 8px;font-size:18px} .good h3{color:var(--green)} .bad h3{color:var(--red)}
   .def{background:#fff;border-radius:12px;padding:12px;font-size:14px;line-height:1.45}
   .def b{display:block;margin-bottom:4px}
   .undo{font-size:13px;color:var(--muted);text-decoration:underline;cursor:pointer;background:none;border:0;padding:6px 0 0}
-  .thumb{position:relative;border-radius:14px;overflow:hidden}
+  .thumb{position:relative;border-radius:14px;overflow:hidden;cursor:pointer}
   .thumb img{width:100%;display:block} .play{position:absolute;inset:0;display:grid;place-items:center}
   .play span{width:56px;height:56px;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;display:grid;place-items:center;font-size:22px}
   .dur{position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,.65);color:#fff;font-size:12px;padding:2px 6px;border-radius:6px}
   .memory{background:var(--blue-soft);border-radius:12px;padding:10px 12px;font-size:14px;margin-top:10px}
   video{width:100%;border-radius:12px;background:#000;display:block}
-  .chapters button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 10px;font-size:13px;cursor:pointer;margin:8px 6px 0 0}
-  .big{font-size:56px;text-align:center;margin-top:30px}
+  .vtools{display:flex;gap:8px;margin-top:10px}
+  .vtools button{flex:1;border:1px solid var(--line);background:#fff;border-radius:12px;padding:11px 6px;font-size:14px;font-weight:600;cursor:pointer;color:var(--ink)}
+  .chapters button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 12px;font-size:14px;cursor:pointer;margin:8px 6px 0 0;color:var(--ink)}
+  .big{font-size:56px;text-align:center;margin-top:24px}
   .center{text-align:center}
-  .due{display:flex;justify-content:space-between;font-size:14px;border-bottom:1px solid var(--line);padding:10px 0}
+  .due{display:flex;justify-content:space-between;align-items:center;font-size:14px;border-bottom:1px solid var(--line);padding:11px 0;cursor:pointer}
+  .due span:last-child{color:var(--blue);font-weight:600}
+  /* today card with steps */
+  .today{border-radius:18px;background:var(--amber-soft);padding:16px;margin-top:4px}
+  .today .head{display:flex;gap:14px;align-items:center}
+  .steps{margin-top:12px}
+  .step{display:flex;gap:10px;align-items:center;background:#fff;border-radius:12px;padding:10px 12px;margin-top:8px;font-size:14px}
+  .step .n{width:26px;height:26px;border-radius:50%;background:var(--line);display:grid;place-items:center;font-weight:700;font-size:13px;flex:none}
+  .step.done .n{background:var(--green);color:#fff}
+  .step.next{outline:2px solid var(--green)}
+  .scenechip{display:inline-block;font-size:12px;font-weight:700;color:var(--blue);background:var(--blue-soft);border-radius:999px;padding:3px 10px}
+  .hint{font-size:14px;color:var(--muted);margin-top:10px;line-height:1.4}
+  .misslist .due span:first-child{font-weight:600}
   /* On a real phone: drop the fake phone frame and fill the screen */
   @media (max-width:500px){
     body{padding:0;background:var(--phone)}
@@ -74,49 +92,75 @@
       <div class="sub">CS6750 Human-Computer Interaction</div>
       <h1>Good evening</h1>
       <div class="stats">
-        <div class="stat"><b id="streak">🔥 4</b><span>day streak</span></div>
+        <div class="stat"><b id="week">4 of 7</b><span>days this week</span></div>
         <div class="stat"><b id="xp">120</b><span>XP</span></div>
-        <div class="stat"><b>3</b><span>lectures due</span></div>
+        <div class="stat"><b id="duecount">1</b><span>lessons today</span></div>
       </div>
-      <div class="goal">
-        <div class="ring" id="ring"></div>
-        <div><b>Daily goal</b><div class="sub" id="goaltext">10 more questions today</div></div>
+      <div class="today">
+        <div class="head">
+          <div class="ring" id="ring"></div>
+          <div><div class="sub" style="font-weight:600">Today’s lesson</div><b style="font-size:18px">Errors: slips and mistakes</b>
+            <div class="sub" id="goaltext">Daily goal: 10 questions</div></div>
+        </div>
+        <div class="steps">
+          <div class="step" id="step1"><span class="n">1</span><span><b>Watch the story</b> · 2 min<br><span class="sub">4 short scenes, one question after each</span></span></div>
+          <div class="step" id="step2"><span class="n">2</span><span><b>Practice</b> · 6 questions · 2 min<br><span class="sub">plus a second try on anything you miss</span></span></div>
+        </div>
+        <button class="btn primary" id="mainbtn" onclick="mainAction()">Start lesson</button>
+        <button class="link" id="skiplink" onclick="startReview()">Skip the story, go to questions</button>
       </div>
-      <button class="btn primary" onclick="startRound()">Start round · 10 questions · about 4 min</button>
       <h2 style="margin-top:22px">Lectures</h2>
       <div class="card" onclick="go('lecture')">
-        <div class="row" style="justify-content:space-between"><b>Errors: slips and mistakes</b><span class="pill">10 due</span></div>
-        <div class="sub">Story video watched · practice due today</div>
+        <div class="row" style="justify-content:space-between"><b>Errors: slips and mistakes</b><span class="pill" id="lecpill">New story</span></div>
+        <div class="sub" id="lecsub">Story video and 10 practice questions</div>
       </div>
-      <div class="card" style="opacity:.6"><b>Mental models</b><div class="sub">2 due tomorrow</div></div>
+      <div class="card" style="opacity:.6"><b>Mental models</b><div class="sub">Review due tomorrow</div></div>
       <div class="card" style="opacity:.6"><b>Feedback cycles</b><div class="sub">Up to date</div></div>
     </div>
   </section>
 
-  <!-- LECTURE -->
+  <!-- LECTURE HUB -->
   <section class="screen" id="lecture">
-    <div class="top"><button class="x" onclick="go('home')">‹</button><b>Errors: slips and mistakes</b></div>
+    <div class="top"><button class="x" onclick="go('home')" aria-label="Back">‹</button><b>Errors: slips and mistakes</b></div>
     <div class="pad" style="padding-top:4px">
       <div class="thumb" onclick="openVideo(0)">
         <img src="assets/v2_s01.jpg" alt="Story video">
-        <div class="play"><span>▶</span></div><div class="dur" id="vdur">1:59</div>
+        <div class="play"><span>▶</span></div><div class="dur">1:59</div>
       </div>
+      <div class="sub" style="margin-top:6px">Watch the whole story at once</div>
       <div class="memory"><b>Memory line:</b> “Slips happen in the AM.” A for Action-based slip, M for Memory-lapse slip.</div>
-      <button class="btn primary" onclick="startRound()">Practice · 10 questions</button>
-      <h2 style="margin-top:20px">What is due</h2>
-      <div class="due"><span>Action-based slip</span><span class="sub">due today</span></div>
-      <div class="due"><span>Memory-lapse slip</span><span class="sub">due today</span></div>
-      <div class="due"><span>Slip vs. mistake</span><span class="sub">due today</span></div>
-      <div class="due"><span>Preventing slips</span><span class="sub">due today</span></div>
-      <div class="due"><span>Slips happen in the AM</span><span class="sub">due today</span></div>
+      <button class="btn primary" id="lecbtn" onclick="mainAction()">Start lesson</button>
+      <h2 style="margin-top:20px">Topics in this lecture</h2>
+      <div class="sub">Tap a topic to watch its scene.</div>
+      <div class="due" onclick="openVideo(T.s03)"><span>Slip vs. mistake</span><span>▶ scene</span></div>
+      <div class="due" onclick="openVideo(T.s04)"><span>A · Action-based slip</span><span>▶ scene</span></div>
+      <div class="due" onclick="openVideo(T.s06)"><span>M · Memory-lapse slip</span><span>▶ scene</span></div>
+      <div class="due" onclick="openVideo(T.s10)"><span>Preventing slips</span><span>▶ scene</span></div>
     </div>
   </section>
 
-  <!-- VIDEO -->
+  <!-- LESSON: story scene by scene -->
+  <section class="screen" id="lesson">
+    <div class="top"><button class="x" onclick="leave()" aria-label="Leave lesson">✕</button><div class="bar"><i id="lprog" style="width:0%"></i></div></div>
+    <div class="pad" style="padding-top:2px">
+      <span class="scenechip" id="lchip">Scene 1 of 4</span>
+      <h2 style="margin:8px 0 10px" id="ltitle"></h2>
+      <video id="lvid" src="assets/slips_story_v2.mp4" playsinline preload="auto"></video>
+      <div class="vtools">
+        <button onclick="replaySeg()">↺ Replay</button>
+        <button onclick="fullscreen('lvid')">⛶ Full screen</button>
+        <button onclick="endSeg()">Skip ›</button>
+      </div>
+      <div class="hint" id="lhint">Watch the scene. A question about it comes right after.</div>
+    </div>
+  </section>
+
+  <!-- FREE VIDEO -->
   <section class="screen" id="video">
-    <div class="top"><button class="x" onclick="closeVideo()">‹</button><b id="vtitle">Story video</b></div>
+    <div class="top"><button class="x" onclick="closeVideo()" aria-label="Back">‹</button><b id="vtitle">Story video</b></div>
     <div class="pad" style="padding-top:4px">
       <video id="vid" src="assets/slips_story_v2.mp4" poster="assets/v2_s01.jpg" controls playsinline preload="metadata"></video>
+      <div class="vtools"><button onclick="fullscreen('vid')">⛶ Full screen</button></div>
       <div class="chapters">
         <button onclick="seek(T.s01)">Start</button>
         <button onclick="seek(T.s03)">Slip vs. mistake</button>
@@ -124,16 +168,18 @@
         <button onclick="seek(T.s06)">M · Memory-lapse slip</button>
         <button onclick="seek(T.s10)">Preventing slips</button>
       </div>
-      <div class="memory" id="vnote">Scenes come back later as practice questions.</div>
+      <div class="memory" id="vnote">Tip: turn your phone sideways or use Full screen to read the text panel.</div>
       <button class="btn secondary" id="vback" onclick="closeVideo()">Back</button>
     </div>
   </section>
 
   <!-- QUESTION -->
   <section class="screen" id="question">
-    <div class="top"><button class="x" onclick="go('home')">✕</button><div class="bar"><i id="prog" style="width:0%"></i></div></div>
+    <div class="top"><button class="x" onclick="leave()" aria-label="Leave lesson">✕</button><div class="bar"><i id="prog" style="width:0%"></i></div>
+      <button class="skip" id="skipq" onclick="skipQ()">Skip</button></div>
     <div class="pad" style="padding-top:0">
-      <img id="qimg" src="" alt="" style="width:100%;border-radius:12px;display:none">
+      <div class="qhead"><span id="qcount">Slips · 1/10</span><button class="link" style="margin:0;padding:0" id="watchq" onclick="watchScene()">▶ Watch scene</button></div>
+      <img id="qimg" src="" alt="" style="width:100%;border-radius:12px;display:none;margin-top:10px">
       <div class="q" id="qtext"></div>
       <div id="opts"></div>
     </div>
@@ -141,7 +187,7 @@
       <h3 id="fbtitle"></h3>
       <div class="def" id="fbdef"></div>
       <button class="btn secondary" id="replay">▶ Replay the scene</button>
-      <button class="btn primary" id="next" onclick="nextQ()">Continue</button>
+      <button class="btn primary" id="next" onclick="nextStep()">Continue</button>
       <button class="undo" id="undo" onclick="undo()">Misclicked? Undo</button>
     </div>
   </section>
@@ -150,98 +196,161 @@
   <section class="screen" id="summary">
     <div class="pad center">
       <div class="big">🎉</div>
-      <h1>Round complete</h1>
+      <h1 id="sumtitle">Lesson complete</h1>
       <div class="sub" id="score"></div>
       <div class="stats">
-        <div class="stat"><b id="xpgain">+40</b><span>XP</span></div>
-        <div class="stat"><b id="streak2">🔥 5</b><span>day streak</span></div>
-        <div class="stat"><b>✓</b><span>daily goal</span></div>
+        <div class="stat"><b id="xpgain">+0</b><span>XP</span></div>
+        <div class="stat"><b id="week2">5 of 7</b><span>days this week</span></div>
+        <div class="stat"><b id="goal2">✓</b><span>daily goal</span></div>
       </div>
       <div class="memory" style="text-align:left" id="comeback"></div>
+      <div class="misslist" style="text-align:left" id="misslist"></div>
       <button class="btn primary" onclick="go('home')">Back to home</button>
-      <button class="btn ghost" onclick="startRound()">Keep practicing</button>
+      <button class="btn ghost" onclick="startReview()">Practice again</button>
     </div>
   </section>
 </div>
 
 <script>
 const T={s01:0.0,s02:6.3,s03:19.8,s04:36.1,s05:44.4,s06:60.1,s07:65.8,s08:69.7,s09:75.3,s10:88.7,s11:106.4,s12:109.9}; // scene start times in seconds
-const Q=[
+const SCENES=[
+ {title:"Slip vs. mistake",from:T.s01,to:T.s04},
+ {title:"A · Action-based slip",from:T.s04,to:T.s06},
+ {title:"M · Memory-lapse slip",from:T.s06,to:T.s10},
+ {title:"Preventing slips and recap",from:T.s10,to:9999}
+];
+// One question after each scene (story questions)
+const SQ=[
+ {q:"What makes an error a slip rather than a mistake?",img:"",
+  opts:["The user has the wrong mental model","The user has the right mental model but does the wrong thing anyway","The interface crashes","The user never learned the task"],a:1,
+  term:"Slip vs. mistake",def:"Slip: the user has the right mental model but does the wrong thing anyway. Mistake: the user has the wrong mental model and does the wrong thing as a result.",scene:"s03"},
  {q:"Sam wants to click Save, but his sleepy finger lands on Delete right next to it. Which kind of error is this?",img:"assets/v2_s04.jpg",
   opts:["Action-based slip","Memory-lapse slip","Rule-based mistake","Knowledge-based mistake"],a:0,
   term:"Action-based slip",def:"The user does the wrong action, or the right action on the wrong object, even though they knew the correct action. Memory line: A for Action.",scene:"s04"},
- {q:"A \u201cSave changes?\u201d box shows No where Yes usually is. Ana wants to save but clicks No out of habit. Which kind of error is this?",img:"",
-  opts:["Memory-lapse slip","Action-based slip","Knowledge-based mistake","Not an error"],a:1,
-  term:"Action-based slip",def:"Ana knew she wanted to save, but her habit sent her click to the wrong button. Doing the wrong action while knowing the right one is an action-based slip.",scene:"s04"},
  {q:"Sam puts frozen soup in the microwave, closes the door, and walks back to his desk without pressing Start. Which kind of error is this?",img:"assets/v2_s08.jpg",
   opts:["Action-based slip","Memory-lapse slip","Knowledge-based mistake","Rule-based mistake"],a:1,
   term:"Memory-lapse slip",def:"The user forgets to do something they knew to do. Memory line: M for Memory.",scene:"s06"},
+ {q:"In the memory line “Slips happen in the AM”, what do A and M stand for?",img:"assets/v2_card.jpg",
+  opts:["Action-based and Memory-lapse","Attention and Mistake","Automatic and Manual","Accident and Misclick"],a:0,
+  term:"Slips happen in the AM",def:"A for Action-based slip (doing the wrong thing), M for Memory-lapse slip (forgetting to do the right thing).",scene:"s11"}
+];
+// Practice questions: new situations, same concepts
+const PQ=[
+ {q:"A “Save changes?” box shows No where Yes usually is. Ana wants to save but clicks No out of habit. Which kind of error is this?",img:"",
+  opts:["Memory-lapse slip","Action-based slip","Knowledge-based mistake","Not an error"],a:1,
+  term:"Action-based slip",def:"Ana knew she wanted to save, but her habit sent her click to the wrong button. Doing the wrong action while knowing the right one is an action-based slip.",scene:"s04"},
+ {q:"A box asks “Revert to the original file?” and has no Cancel button. Leo does not understand that reverting throws away his changes, so he picks the wrong option. What is this?",img:"",
+  opts:["Action-based slip","Memory-lapse slip","A mistake, because his mental model of the choice is wrong","Not an error, the interface is fine"],a:2,
+  term:"Slip vs. mistake",def:"Slip: the user has the right mental model but does the wrong thing anyway. Mistake: the user has the wrong mental model and does the wrong thing as a result. Leo never knew which option kept his changes.",scene:"s03"},
  {q:"Priya fills in a long form, then closes the tab without pressing Submit, even though she knew she had to submit it. Which kind of error is this?",img:"",
   opts:["Rule-based mistake","Action-based slip","Memory-lapse slip","Knowledge-based mistake"],a:2,
   term:"Memory-lapse slip",def:"Priya knew the step but forgot to do it. Forgetting a step you knew to do is a memory-lapse slip.",scene:"s09"},
  {q:"Which of these describes an action-based slip?",img:"",
   opts:["Forgetting a step you knew you had to do","Doing the wrong action, or the right action on the wrong object, while knowing the right one","Making the wrong decision even though you read the situation correctly","Misreading the situation in the first place"],a:1,
   term:"Action-based slip",def:"The user does the wrong action, or the right action on the wrong object, even though they knew the correct action. The other options describe a memory-lapse slip, a rule-based mistake and a knowledge-based mistake.",scene:"s05"},
- {q:"In the memory line \u201cSlips happen in the AM\u201d, what do A and M stand for?",img:"assets/v2_card.jpg",
-  opts:["Action-based and Memory-lapse","Attention and Mistake","Automatic and Manual","Accident and Misclick"],a:0,
-  term:"Slips happen in the AM",def:"A for Action-based slip (doing the wrong thing), M for Memory-lapse slip (forgetting to do the right thing).",scene:"s02"},
- {q:"A box asks \u201cRevert to the original file?\u201d and has no Cancel button. Leo does not understand that reverting throws away his changes, so he picks the wrong option. What is this?",img:"",
-  opts:["Action-based slip","Memory-lapse slip","A mistake, because his mental model of the choice is wrong","Not an error, the interface is fine"],a:2,
-  term:"Slip vs. mistake",def:"Slip: the user has the right mental model but does the wrong thing anyway. Mistake: the user has the wrong mental model and does the wrong thing as a result. Leo never knew which option kept his changes.",scene:"s03"},
- {q:"Why are both of Sam's errors slips and not mistakes?",img:"assets/v2_s05.jpg",
-  opts:["He knew the right thing to do, but did the wrong thing or forgot a step","He did not understand how the laptop or the microwave works","The laptop and the microwave were broken","He made the wrong plan from the start"],a:0,
-  term:"Slip vs. mistake",def:"Sam knew he wanted Save and knew he had to press Start. A slip happens when the user knows the right thing to do but does the wrong thing anyway.",scene:"s03"},
  {q:"Which design choice helps prevent a memory-lapse slip?",img:"",
-  opts:["Swapping the order of Yes and No","Making No the default button","Asking \u201cSave changes before closing?\u201d when a file is closed","Hiding the Cancel button"],a:2,
-  term:"Preventing slips",def:"A \u201cSave changes before closing?\u201d prompt reminds the user of the step they forgot, so it prevents a memory-lapse slip. Swapping buttons or making No the default would cause action-based slips.",scene:"s10"},
+  opts:["Swapping the order of Yes and No","Making No the default button","Asking “Save changes before closing?” when a file is closed","Hiding the Cancel button"],a:2,
+  term:"Preventing slips",def:"A “Save changes before closing?” prompt reminds the user of the step they forgot, so it prevents a memory-lapse slip. Swapping buttons or making No the default would cause action-based slips.",scene:"s10"},
  {q:"A chat app opens the last conversation by default, so Jo sometimes sends a message to the wrong person. Which fix prevents this without adding steps?",img:"",
-  opts:["Show the recipient's photo on the Send button","Ask \u201cAre you sure?\u201d before every message","Delete the chat history every day","Open a random chat on start"],a:0,
+  opts:["Show the recipient's photo on the Send button","Ask “Are you sure?” before every message","Delete the chat history every day","Open a random chat on start"],a:0,
   term:"Preventing slips",def:"Showing who will get the message right on the Send button reminds Jo at the moment of sending, so the slip is caught without making the interaction longer.",scene:"s10"}
 ];
 const GOAL=10;
-let i=0,right=0,missed=[],last=null,returnTo=null,doneToday=0;
-function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));if(id==='home')ring();}
-function ring(){const p=Math.min(doneToday,GOAL)/GOAL;document.getElementById('ring').style.background=`conic-gradient(var(--amber) ${p*360}deg, #f5dfb0 0)`;
-  document.getElementById('ring').textContent=`${Math.min(doneToday,GOAL)}/${GOAL}`;
-  document.getElementById('goaltext').textContent=doneToday>=GOAL?'Goal reached, nice work!':`${GOAL-doneToday} more questions today`;}
-function startRound(){i=0;right=0;missed=[];show();go('question');}
-function show(){const d=Q[i];document.getElementById('prog').style.width=(i/Q.length*100)+'%';
-  const im=document.getElementById('qimg'); if(d.img){im.src=d.img;im.style.display='block'}else{im.style.display='none'}
-  document.getElementById('qtext').textContent=d.q;
-  const o=document.getElementById('opts');o.innerHTML='';
+let watched=false, doneToday=0, xp=120, week=4, weekDone=false;
+let plan=[], step=0, nQ=0, qNo=0, right=0, gained=0, missed=[], last=null, pushed=false, returnTo=null, mode="lesson", segTo=0;
+
+const $=id=>document.getElementById(id);
+function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));if(id==='home')renderHome();
+  if(id!=='lesson'){$('lvid').pause()} if(id!=='video'){$('vid').pause()}}
+function renderHome(){
+  const p=Math.min(doneToday,GOAL)/GOAL;
+  $('ring').style.background=`conic-gradient(var(--amber) ${p*360}deg, #f5dfb0 0)`;
+  $('ring').textContent=`${Math.min(doneToday,GOAL)}/${GOAL}`;
+  $('goaltext').textContent=doneToday>=GOAL?'Daily goal reached, nice work!':`Daily goal: ${GOAL-doneToday} more questions`;
+  $('xp').textContent=xp; $('week').textContent=`${week} of 7`; $('duecount').textContent=watched?0:1;
+  $('step1').className='step'+(watched?' done':' next'); $('step1').querySelector('.n').textContent=watched?'✓':'1';
+  $('step2').className='step'+(watched?' done':''); $('step2').querySelector('.n').textContent=watched?'✓':'2';
+  $('mainbtn').textContent=watched?'Review · questions first · about 3 min':'Start lesson · about 5 min';
+  $('lecbtn').textContent=watched?'Review · questions first':'Start lesson';
+  $('skiplink').style.display=watched?'none':'block';
+  $('lecpill').textContent=watched?'Done today':'New story'; $('lecpill').className='pill'+(watched?' done':'');
+  $('lecsub').textContent=watched?'Missed questions come back in your next review':'Story video and 10 practice questions';
+}
+function mainAction(){watched?startReview():startLesson()}
+
+// ---------- rounds ----------
+function begin(m,p){mode=m;plan=p;step=0;qNo=0;right=0;gained=0;missed=[];nQ=p.filter(s=>s.t==='q').length;runStep()}
+function startLesson(){const p=[];SCENES.forEach((s,k)=>{p.push({t:'scene',k});p.push({t:'q',q:SQ[k]})});PQ.forEach(q=>p.push({t:'q',q}));begin('lesson',p)}
+function startReview(){const order=[PQ[0],SQ[2],PQ[1],SQ[1],PQ[2],SQ[0],PQ[3],SQ[3],PQ[4],PQ[5]];begin('review',order.map(q=>({t:'q',q})))}
+function progress(){const w=(step/plan.length*100)+'%';$('prog').style.width=w;$('lprog').style.width=w}
+function runStep(){progress();if(step>=plan.length)return finish();const s=plan[step];s.t==='scene'?playScene(s.k):showQ()}
+function nextStep(){const s=plan[step];if(s&&s.t==='q'){doneToday++;}step++;runStep()}
+
+// ---------- scenes ----------
+function playScene(k){const sc=SCENES[k];$('lchip').textContent=`Scene ${k+1} of ${SCENES.length}`;$('ltitle').textContent=sc.title;
+  go('lesson');const v=$('lvid');segTo=sc.to;const s=()=>{v.currentTime=sc.from;v.play().catch(()=>{})};
+  if(v.readyState>=1)s();else v.addEventListener('loadedmetadata',s,{once:true});}
+function replaySeg(){const sc=SCENES[plan[step].k];const v=$('lvid');v.currentTime=sc.from;v.play().catch(()=>{})}
+function endSeg(){const v=$('lvid');v.pause();exitFs();if($('lesson').classList.contains('on')&&plan[step]&&plan[step].t==='scene'){step++;runStep()}}
+$('lvid').addEventListener('timeupdate',()=>{const v=$('lvid');if(!v.paused&&v.currentTime>=segTo-0.1)endSeg()});
+$('lvid').addEventListener('ended',endSeg);
+
+// ---------- questions ----------
+function showQ(){const s=plan[step],d=s.q;
+  if(!s.second)qNo++;
+  $('qcount').textContent=s.second?'Slips · Second try':`Slips · ${qNo}/${nQ}`;
+  const im=$('qimg');if(d.img){im.src=d.img;im.style.display='block'}else{im.style.display='none'}
+  $('qtext').textContent=d.q;
+  const o=$('opts');o.innerHTML='';
   d.opts.forEach((t,k)=>{const b=document.createElement('button');b.className='opt';b.textContent=t;b.onclick=()=>answer(k);o.appendChild(b)});
-  document.getElementById('fb').style.display='none';}
-function answer(k){const d=Q[i];last=k;const ok=k===d.a;if(ok)right++;else missed.push(d.term);
+  $('fb').style.display='none';$('skipq').style.display=s.second?'none':'inline';go('question');}
+function answer(k){const s=plan[step],d=s.q;last=k;const ok=k===d.a;pushed=false;
+  if(ok){if(!s.second){right++;gained+=10}else gained+=5}
+  else{missed.push(d);if(!s.second){plan.push({t:'q',q:d,second:true});pushed=true}}
   document.querySelectorAll('.opt').forEach((b,j)=>{b.disabled=true;if(j===d.a)b.classList.add('correct');else if(j===k)b.classList.add('wrong')});
-  const fb=document.getElementById('fb');fb.className='feedback '+(ok?'good':'bad');fb.style.display='block';
-  document.getElementById('fbtitle').textContent=ok?'Correct!':'Not quite';
-  document.getElementById('fbdef').innerHTML=`<b>${d.term}</b>${d.def}`;
-  const r=document.getElementById('replay');r.style.display=ok?'none':'block';r.onclick=()=>openVideo(T[d.scene],true);
-  document.getElementById('undo').style.display=ok?'none':'inline-block';}
-function undo(){const d=Q[i];if(last!==d.a){missed.pop()}show();}
-function nextQ(){i++;doneToday++;document.getElementById('prog').style.width=(i/Q.length*100)+'%';
-  if(i<Q.length)show();else finish();}
-function finish(){document.getElementById('score').textContent=`${right} of ${Q.length} correct`;
-  document.getElementById('xpgain').textContent='+'+(right*10);
-  document.getElementById('xp').textContent=120+right*10;document.getElementById('streak').textContent='🔥 5';
-  document.getElementById('comeback').innerHTML=missed.length?`<b>Coming back sooner:</b> ${[...new Set(missed)].join(', ')}. Questions you miss return in your next round.`:'<b>All correct.</b> These questions come back in a few days to keep them fresh.';
+  const fb=$('fb');fb.className='feedback '+(ok?'good':'bad');fb.style.display='block';
+  $('fbtitle').textContent=ok?'Correct! +'+(s.second?5:10)+' XP':(s.second?'Not quite, this one comes back in your next review':'Not quite, you get a second try at the end');
+  $('fbdef').innerHTML=`<b>${d.term}</b>${d.def}`;
+  const r=$('replay');r.style.display=ok?'none':'block';r.onclick=()=>openVideo(T[d.scene],true);
+  $('undo').style.display=ok?'none':'inline-block';$('skipq').style.display='none';}
+function undo(){const s=plan[step];if(last!==s.q.a){missed.pop();if(pushed)plan.pop()}if(!s.second)qNo--;showQ()}
+function skipQ(){const s=plan[step];plan.push({t:'q',q:s.q,second:true});step++;runStep()}
+function watchScene(){openVideo(T[plan[step].q.scene],true)}
+function leave(){if(confirm('Leave this lesson? Your answers in this round will not be saved.'))go('home')}
+
+// ---------- summary ----------
+function finish(){
+  if(mode==='lesson')watched=true;
+  xp+=gained;if(!weekDone){week++;weekDone=true}
+  $('sumtitle').textContent=mode==='lesson'?'Lesson complete':'Review complete';
+  $('score').textContent=`${right} of ${nQ} right on the first try`;
+  $('xpgain').textContent='+'+gained;$('week2').textContent=`${week} of 7`;$('goal2').textContent=doneToday>=GOAL?'✓':`${Math.min(doneToday,GOAL)}/${GOAL}`;
+  const uniq=[];missed.forEach(d=>{if(!uniq.find(u=>u.term===d.term))uniq.push(d)});
+  $('comeback').innerHTML=uniq.length?'<b>Coming back sooner:</b> questions you missed return in your next review. Rewatch the scene now:':'<b>All correct.</b> These questions come back in a few days to keep them fresh.';
+  $('misslist').innerHTML=uniq.map(d=>`<div class="due" onclick="openVideo(${T[d.scene]})"><span>${d.term}</span><span>▶ Rewatch</span></div>`).join('');
   go('summary');}
-function openVideo(t,fromQ){returnTo=fromQ?'question':'lecture';go('video');
-  document.getElementById('vtitle').textContent=fromQ?'Replay the scene':'Story video';
-  document.getElementById('vback').textContent=fromQ?'Back to the question':'Back';
-  document.getElementById('vnote').textContent=fromQ?'Watch the scene, then go back to the question.':'Scenes come back later as practice questions.';
+
+// ---------- free video ----------
+function openVideo(t,fromQ){returnTo=fromQ?'question':($('summary').classList.contains('on')?'summary':'lecture');go('video');
+  $('vtitle').textContent=fromQ?'Watch the scene':'Story video';
+  $('vback').textContent=fromQ?'Back to the question':'Back';
   seek(t);}
-function seek(t){const v=document.getElementById('vid');const s=()=>{v.currentTime=t;v.play().catch(()=>{})};if(v.readyState>=1)s();else v.addEventListener('loadedmetadata',s,{once:true});}
-function closeVideo(){document.getElementById('vid').pause();go(returnTo||'lecture');}
-ring();
-// Shortcuts for screenshots, e.g. index.html#q1, #wrong, #right, #video, #summary
-(function(){const h=location.hash.slice(1);if(!h)return;
+function seek(t){const v=$('vid');const s=()=>{v.currentTime=t;v.play().catch(()=>{})};if(v.readyState>=1)s();else v.addEventListener('loadedmetadata',s,{once:true});}
+function closeVideo(){$('vid').pause();exitFs();go(returnTo||'lecture');}
+function fullscreen(id){const v=$(id);if(v.requestFullscreen)v.requestFullscreen().catch(()=>{});else if(v.webkitEnterFullscreen)v.webkitEnterFullscreen();}
+function exitFs(){try{if(document.fullscreenElement)document.exitFullscreen();const v=$('lvid');if(v.webkitDisplayingFullscreen)v.webkitExitFullscreen()}catch(e){}}
+
+renderHome();
+// Screenshot shortcuts: #lecture #lesson #sceneq #q #wrong #video #summary #review
+(function(){const h=location.hash.slice(1);if(!h)return;const pause=()=>setTimeout(()=>$('lvid').pause(),300);
   if(h==='lecture')go('lecture');
-  if(h==='q1'){startRound();}
-  if(h==='right'){startRound();answer(0);}
-  if(h==='wrong'){startRound();i=1;show();answer(0);}
-  if(h==='video'){openVideo(T.s06,true);document.getElementById('vid').pause();}
-  if(h==='summary'){startRound();[0,1,0,2,1,0,2,0,2,0].forEach(k=>{answer(k);nextQ();});}
+  if(h==='lesson'){startLesson();pause();}
+  if(h==='sceneq'){startLesson();endSeg();step=2;runStep();endSeg();}
+  if(h==='q'){startLesson();step=8;qNo=4;runStep();}
+  if(h==='wrong'){startLesson();step=8;qNo=4;runStep();answer(0);}
+  if(h==='video'){openVideo(T.s06,true);setTimeout(()=>$('vid').pause(),300);}
+  if(h==='summary'){startLesson();let g=0;while(step<plan.length&&g++<60){const s=plan[step];if(s.t==='scene'){endSeg();continue}answer(s.second?s.q.a:(step===3||step===10?(s.q.a+1)%4:s.q.a));nextStep();}$('lvid').pause();}
+  if(h==='review'){watched=true;doneToday=10;week=5;weekDone=true;renderHome();}
 })();
 </script>
 </body>
