@@ -56,6 +56,17 @@
   .dur{position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,.65);color:#fff;font-size:12px;padding:2px 6px;border-radius:6px}
   .memory{background:var(--blue-soft);border-radius:12px;padding:10px 12px;font-size:14px;margin-top:10px}
   video{width:100%;border-radius:12px;background:#000;display:block}
+  /* phone view of the story: crop to the picture part of the frame, show the text as real text below */
+  .vbox{position:relative;width:100%;aspect-ratio:880/495;overflow:hidden;border-radius:12px;background:#000}
+  .vbox video{width:145.4545%;max-width:none;margin-top:-4.5455%;border-radius:0}
+  video:fullscreen{width:100%!important;margin:0!important} video:-webkit-full-screen{width:100%!important;margin:0!important}
+  .tap{position:absolute;inset:0;display:none;place-items:center;background:rgba(0,0,0,.28);cursor:pointer}
+  .tap span{width:64px;height:64px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;display:grid;place-items:center;font-size:26px}
+  .cap{margin-top:10px;background:#141b2a;color:#fff;border-radius:14px;padding:12px 14px;border-left:5px solid var(--blue)}
+  .cap .h{font-weight:800;font-size:17px;letter-spacing:.2px}
+  .cap .s{font-size:13px;color:#b8c2d3;margin-top:3px;line-height:1.35}
+  .cap .x{font-size:16px;line-height:1.45;margin-top:10px;min-height:4.4em}
+  .cap .x.story{font-style:italic;color:#dfe5ef}
   .vtools{display:flex;gap:8px;margin-top:10px}
   .vtools button{flex:1;border:1px solid var(--line);background:#fff;border-radius:12px;padding:11px 6px;font-size:14px;font-weight:600;cursor:pointer;color:var(--ink)}
   .chapters button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 12px;font-size:14px;cursor:pointer;margin:8px 6px 0 0;color:var(--ink)}
@@ -145,13 +156,15 @@
     <div class="pad" style="padding-top:2px">
       <span class="scenechip" id="lchip">Scene 1 of 4</span>
       <h2 style="margin:8px 0 10px" id="ltitle"></h2>
-      <video id="lvid" src="assets/slips_story_v2.mp4" playsinline preload="auto"></video>
+      <div class="vbox"><video id="lvid" src="assets/slips_story_v2.mp4" playsinline preload="auto" onclick="toggle('lvid')"></video>
+        <div class="tap" id="lvid_tap" onclick="toggle('lvid')"><span>▶</span></div></div>
+      <div class="cap" id="lvid_cap"><div class="h"></div><div class="s"></div><div class="x"></div></div>
       <div class="vtools">
         <button onclick="replaySeg()">↺ Replay</button>
         <button onclick="fullscreen('lvid')">⛶ Full screen</button>
         <button onclick="endSeg()">Skip ›</button>
       </div>
-      <div class="hint" id="lhint">Watch the scene. A question about it comes right after.</div>
+      <div class="hint" id="lhint">Watch the scene. A question about it comes right after. Full screen shows the original video with its text panel.</div>
     </div>
   </section>
 
@@ -159,8 +172,10 @@
   <section class="screen" id="video">
     <div class="top"><button class="x" onclick="closeVideo()" aria-label="Back">‹</button><b id="vtitle">Story video</b></div>
     <div class="pad" style="padding-top:4px">
-      <video id="vid" src="assets/slips_story_v2.mp4" poster="assets/v2_s01.jpg" controls playsinline preload="metadata"></video>
-      <div class="vtools"><button onclick="fullscreen('vid')">⛶ Full screen</button></div>
+      <div class="vbox"><video id="vid" src="assets/slips_story_v2.mp4" playsinline preload="metadata" onclick="toggle('vid')"></video>
+        <div class="tap" id="vid_tap" onclick="toggle('vid')"><span>▶</span></div></div>
+      <div class="cap" id="vid_cap"><div class="h"></div><div class="s"></div><div class="x"></div></div>
+      <div class="vtools"><button onclick="toggle('vid')" id="vid_pp">❚❚ Pause</button><button onclick="fullscreen('vid')">⛶ Full screen</button></div>
       <div class="chapters">
         <button onclick="seek(T.s01)">Start</button>
         <button onclick="seek(T.s03)">Slip vs. mistake</button>
@@ -168,7 +183,6 @@
         <button onclick="seek(T.s06)">M · Memory-lapse slip</button>
         <button onclick="seek(T.s10)">Preventing slips</button>
       </div>
-      <div class="memory" id="vnote">Tip: turn your phone sideways or use Full screen to read the text panel.</div>
       <button class="btn secondary" id="vback" onclick="closeVideo()">Back</button>
     </div>
   </section>
@@ -255,11 +269,26 @@ const PQ=[
   opts:["Show the recipient's photo on the Send button","Ask “Are you sure?” before every message","Delete the chat history every day","Open a random chat on start"],a:0,
   term:"Preventing slips",def:"Showing who will get the message right on the Send button reminds Jo at the moment of sending, so the slip is caught without making the interaction longer.",scene:"s10"}
 ];
+const CUES=[{"t": 0.35, "e": 5.71, "x": "Meet Sam. It is six in the morning, and Sam has not had his coffee yet.", "k": "story"}, {"t": 6.65, "e": 16.46, "x": "Today's topic is slips. Here is one line to remember. Slips happen in the AM. A, for action-based slips.", "k": "teach"}, {"t": 16.46, "e": 19.21, "x": "And M, for memory-lapse slips.", "k": "teach"}, {"t": 20.15, "e": 27.83, "x": "So, what is a slip? A slip happens when you know the right thing to do, but you do the wrong thing anyway.", "k": "teach"}, {"t": 27.83, "e": 35.51, "x": "A mistake is different. In a mistake, your mental model is wrong, so you never knew the right thing to do.", "k": "teach"}, {"t": 36.45, "e": 43.81, "x": "Sam finishes his report and reaches for Save. But his sleepy finger lands on Delete, right next to it.", "k": "story"}, {"t": 44.75, "e": 46.67, "x": "The report is gone.", "k": "story"}, {"t": 47.12, "e": 49.38, "x": "That is an action-based slip.", "k": "teach"}, {"t": 49.38, "e": 58.35, "x": "Sam did the wrong action, or the right action on the wrong thing, even though he knew exactly what he wanted to do.", "k": "teach"}, {"t": 58.35, "e": 59.44, "x": "A, for action.", "k": "teach"}, {"t": 60.45, "e": 65.17, "x": "Later that morning, Sam takes a frozen soup out of the office freezer.", "k": "story"}, {"t": 66.15, "e": 69.11, "x": "He puts it in the microwave, and closes the door.", "k": "story"}, {"t": 70.05, "e": 74.77, "x": "And then he walks straight back to his desk. He never pressed Start.", "k": "story"}, {"t": 75.65, "e": 79.17, "x": "At lunch, the soup is still frozen solid.", "k": "story"}, {"t": 79.62, "e": 88.1, "x": "That is a memory-lapse slip. Sam knew he had to press Start. He just forgot to do it. M, for memory.", "k": "teach"}, {"t": 89.05, "e": 91.26, "x": "Good design can prevent slips.", "k": "teach"}, {"t": 91.26, "e": 97.37, "x": "A prompt like, save changes before closing, reminds you of a step you might forget.", "k": "teach"}, {"t": 97.37, "e": 105.77, "x": "And keeping Save far away from Delete, with an undo button, makes action-based slips less likely, and less costly.", "k": "teach"}, {"t": 106.75, "e": 109.31, "x": "Finally, Sam gets his coffee.", "k": "story"}, {"t": 110.25, "e": 118.49, "x": "So remember. Slips happen in the AM. A, for action-based. M, for memory-lapse.", "k": "teach"}];
+const HEADS=[{"t": 0.0, "h": "Slips happen in the AM", "s": "Two kinds of slip to remember"}, {"t": 6.3, "h": "Slips happen in the AM", "s": "A = Action-based slip   ·   M = Memory-lapse slip"}, {"t": 19.8, "h": "SLIP vs. MISTAKE", "s": "slip: right mental model, wrong action   ·   mistake: wrong mental model"}, {"t": 36.1, "h": "A (AM)  →  ACTION-BASED SLIP", "s": "wrong action, or the right action on the wrong object"}, {"t": 44.4, "h": "A (AM)  →  ACTION-BASED SLIP", "s": "wrong action, or the right action on the wrong object"}, {"t": 60.1, "h": "M (AM)  →  MEMORY-LAPSE SLIP", "s": "forgetting to do something you knew to do"}, {"t": 65.8, "h": "M (AM)  →  MEMORY-LAPSE SLIP", "s": "forgetting to do something you knew to do"}, {"t": 69.7, "h": "M (AM)  →  MEMORY-LAPSE SLIP", "s": "forgetting to do something you knew to do"}, {"t": 75.3, "h": "M (AM)  →  MEMORY-LAPSE SLIP", "s": "forgetting to do something you knew to do"}, {"t": 88.7, "h": "PREVENTING SLIPS", "s": "remind forgotten steps   ·   keep risky buttons apart   ·   allow undo"}, {"t": 106.4, "h": "Slips happen in the AM", "s": "A = Action-based slip   ·   M = Memory-lapse slip"}, {"t": 109.9, "h": "Slips happen in the AM", "s": "A = Action-based slip   ·   M = Memory-lapse slip"}];
+function caption(id){const v=$(id),t=v.currentTime,box=$(id+'_cap');if(!box)return;
+  let h=HEADS[0];HEADS.forEach(x=>{if(t>=x.t-0.05)h=x});
+  let c=null;CUES.forEach(x=>{if(t>=x.t-0.2&&x.t>=h.t-0.05)c=x});
+  box.querySelector('.h').textContent=h.h;box.querySelector('.s').textContent=h.s;
+  const xe=box.querySelector('.x');xe.textContent=c?c.x:'';xe.className='x'+(c&&c.k==='story'?' story':'');
+  box.style.borderLeftColor=h.h.startsWith('A ')?'var(--green)':h.h.startsWith('M ')?'var(--blue)':'#8a94a8';}
+function playFrom(v,t){if(v.readyState>=1)v.currentTime=t;else v.addEventListener('loadedmetadata',()=>{v.currentTime=t;caption(v.id)},{once:true});
+  const p=v.play();if(p)p.catch(()=>{$(v.id+'_tap').style.display='grid'});caption(v.id);}
+function toggle(id){const v=$(id);if(v.paused){const p=v.play();if(p)p.catch(()=>{})}else v.pause()}
 const GOAL=10;
 let watched=false, doneToday=0, xp=120, week=4, weekDone=false;
 let plan=[], step=0, nQ=0, qNo=0, right=0, gained=0, missed=[], last=null, pushed=false, returnTo=null, mode="lesson", segTo=0;
 
 const $=id=>document.getElementById(id);
+['lvid','vid'].forEach(id=>{const v=$(id);
+  v.addEventListener('timeupdate',()=>caption(id));
+  v.addEventListener('play',()=>{$(id+'_tap').style.display='none';if($(id+'_pp'))$(id+'_pp').textContent='❚❚ Pause'});
+  v.addEventListener('pause',()=>{if($(id).closest('.screen').classList.contains('on'))$(id+'_tap').style.display='grid';if($(id+'_pp'))$(id+'_pp').textContent='▶ Play'});});
 function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));if(id==='home')renderHome();
   if(id!=='lesson'){$('lvid').pause()} if(id!=='video'){$('vid').pause()}}
 function renderHome(){
@@ -288,10 +317,9 @@ function nextStep(){const s=plan[step];if(s&&s.t==='q'){doneToday++;}step++;runS
 
 // ---------- scenes ----------
 function playScene(k){const sc=SCENES[k];$('lchip').textContent=`Scene ${k+1} of ${SCENES.length}`;$('ltitle').textContent=sc.title;
-  go('lesson');const v=$('lvid');segTo=sc.to;const s=()=>{v.currentTime=sc.from;v.play().catch(()=>{})};
-  if(v.readyState>=1)s();else v.addEventListener('loadedmetadata',s,{once:true});}
-function replaySeg(){const sc=SCENES[plan[step].k];const v=$('lvid');v.currentTime=sc.from;v.play().catch(()=>{})}
-function endSeg(){const v=$('lvid');v.pause();exitFs();if($('lesson').classList.contains('on')&&plan[step]&&plan[step].t==='scene'){step++;runStep()}}
+  go('lesson');const v=$('lvid');segTo=sc.to;$('lvid_tap').style.display='none';playFrom(v,sc.from);}
+function replaySeg(){const sc=SCENES[plan[step].k];playFrom($('lvid'),sc.from)}
+function endSeg(){const v=$('lvid');segTo=1e9;v.pause();$('lvid_tap').style.display='none';exitFs();if($('lesson').classList.contains('on')&&plan[step]&&plan[step].t==='scene'){step++;runStep()}}
 $('lvid').addEventListener('timeupdate',()=>{const v=$('lvid');if(!v.paused&&v.currentTime>=segTo-0.1)endSeg()});
 $('lvid').addEventListener('ended',endSeg);
 
@@ -335,7 +363,7 @@ function openVideo(t,fromQ){returnTo=fromQ?'question':($('summary').classList.co
   $('vtitle').textContent=fromQ?'Watch the scene':'Story video';
   $('vback').textContent=fromQ?'Back to the question':'Back';
   seek(t);}
-function seek(t){const v=$('vid');const s=()=>{v.currentTime=t;v.play().catch(()=>{})};if(v.readyState>=1)s();else v.addEventListener('loadedmetadata',s,{once:true});}
+function seek(t){playFrom($('vid'),t)}
 function closeVideo(){$('vid').pause();exitFs();go(returnTo||'lecture');}
 function fullscreen(id){const v=$(id);if(v.requestFullscreen)v.requestFullscreen().catch(()=>{});else if(v.webkitEnterFullscreen)v.webkitEnterFullscreen();}
 function exitFs(){try{if(document.fullscreenElement)document.exitFullscreen();const v=$('lvid');if(v.webkitDisplayingFullscreen)v.webkitExitFullscreen()}catch(e){}}
