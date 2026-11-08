@@ -2,89 +2,125 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Study Buddy prototype</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Study Buddy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#eef1f6; --phone:#ffffff; --ink:#18202e; --muted:#6b7385; --line:#e3e7ef;
-    --green:#22a55a; --green-soft:#e6f6ec; --red:#d94848; --red-soft:#fdeaea;
-    --blue:#2f6fe4; --blue-soft:#e8f0fe; --amber:#f2a516; --amber-soft:#fff4dc;
+    --bg:#eef1f6; --phone:#ffffff; --ink:#18202e; --muted:#526077; --line:#e3e7ef; --subtle:#f1f5f9;
+    --green:#15803d; --green-edge:#0f5f2c; --green-soft:#e7f6ec; --green-line:#86d3a0;
+    --red:#b42318; --red-edge:#8a1a12; --red-soft:#fdecea; --red-line:#f1a59d;
+    --blue:#1d4ed8; --blue-edge:#1639a3; --blue-soft:#e8efff;
+    --amber:#f59e0b; --amber-soft:#fff6e0; --amber-line:#f5d98a;
   }
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;color:var(--ink);
-       display:flex;justify-content:center;align-items:flex-start;min-height:100vh;padding:24px 12px}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:var(--bg);font-family:Nunito,ui-rounded,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);
+       display:flex;justify-content:center;align-items:flex-start;min-height:100vh;padding:24px 12px;font-size:16px}
+  button{font-family:inherit}
+  button:focus-visible,.card:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
   .phone{width:390px;height:844px;background:var(--phone);border-radius:44px;border:10px solid #111;position:relative;overflow:hidden;
          box-shadow:0 20px 60px rgba(0,0,0,.18)}
-  .status{height:44px;display:flex;justify-content:space-between;align-items:center;padding:0 26px;font-size:14px;font-weight:600}
+  .status{height:44px;display:flex;justify-content:space-between;align-items:center;padding:0 26px;font-size:14px;font-weight:700}
   .screen{position:absolute;top:44px;left:0;right:0;bottom:0;display:none;flex-direction:column;overflow-y:auto}
-  .screen.on{display:flex}
-  .pad{padding:16px 20px}
-  h1{font-size:24px;margin:4px 0 2px} h2{font-size:18px;margin:0 0 8px} .sub{color:var(--muted);font-size:14px}
+  .screen.on{display:flex;animation:fadein .18s ease-out}
+  @keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .pad{padding:16px 20px calc(24px + env(safe-area-inset-bottom))}
+  h1{font-size:26px;line-height:32px;font-weight:800;margin:2px 0 4px} h2{font-size:20px;line-height:26px;font-weight:800;margin:0 0 8px}
+  .sub{color:var(--muted);font-size:14px;line-height:20px;font-weight:600}
   .row{display:flex;gap:10px;align-items:center}
-  .stats{display:flex;gap:10px;margin:14px 0}
-  .stat{flex:1;border:1px solid var(--line);border-radius:14px;padding:10px 6px;text-align:center}
-  .stat b{display:block;font-size:20px} .stat span{font-size:12px;color:var(--muted)}
-  .ring{width:58px;height:58px;border-radius:50%;flex:none;display:grid;place-items:center;font-weight:700;font-size:14px}
-  .card{border:1px solid var(--line);border-radius:16px;padding:14px;margin-top:12px;cursor:pointer;background:#fff}
-  .card:hover{border-color:#c8d0de}
-  .pill{display:inline-block;font-size:12px;padding:3px 9px;border-radius:999px;background:var(--blue-soft);color:var(--blue);font-weight:600}
+  .brand{display:flex;align-items:center;gap:8px;font-weight:800;font-size:16px;color:var(--green)}
+  .brand .logo{width:28px;height:28px;border-radius:9px;background:var(--green);display:grid;place-items:center;box-shadow:0 3px 0 var(--green-edge)}
+  .icon{width:20px;height:20px;flex:none;vertical-align:-4px}
+  .stats{display:flex;gap:10px;margin:16px 0}
+  .stat{flex:1;border:2px solid var(--line);border-radius:16px;padding:10px 6px;text-align:center;box-shadow:0 3px 0 var(--line)}
+  .stat b{display:flex;justify-content:center;align-items:center;gap:4px;font-size:22px;font-weight:800;line-height:28px}
+  .stat span{font-size:12px;color:var(--muted);font-weight:700}
+  .ring{width:62px;height:62px;border-radius:50%;flex:none;display:grid;place-items:center;font-weight:800;font-size:14px;position:relative;isolation:isolate}
+  .ring::before{content:"";position:absolute;inset:7px;border-radius:50%;background:var(--amber-soft);z-index:-1}
+  .card{border:2px solid var(--line);border-radius:16px;padding:16px;margin-top:12px;cursor:pointer;background:#fff;box-shadow:0 3px 0 var(--line)}
+  .card.off{background:var(--subtle);cursor:default;box-shadow:none}
+  .card.off b{color:var(--muted)}
+  .pill{display:inline-block;font-size:12px;padding:4px 10px;border-radius:999px;background:var(--blue-soft);color:var(--blue);font-weight:800}
   .pill.done{background:var(--green-soft);color:var(--green)}
-  .btn{display:block;width:100%;border:0;border-radius:14px;padding:15px;font-size:16px;font-weight:700;cursor:pointer;margin-top:12px}
-  .primary{background:var(--green);color:#fff} .secondary{background:var(--blue-soft);color:var(--blue)} .ghost{background:transparent;color:var(--muted);font-weight:600}
-  .link{background:none;border:0;color:var(--blue);font-size:14px;font-weight:600;cursor:pointer;padding:10px 0 0;display:block;margin:0 auto}
-  .top{display:flex;align-items:center;gap:12px;padding:10px 16px}
-  .x{font-size:22px;cursor:pointer;color:var(--muted);border:0;background:none}
-  .bar{flex:1;height:12px;background:var(--line);border-radius:99px;overflow:hidden}
-  .bar i{display:block;height:100%;background:var(--green);border-radius:99px;transition:width .3s}
-  .skip{border:0;background:none;color:var(--muted);font-size:14px;font-weight:600;cursor:pointer}
-  .qhead{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);font-weight:600;margin-top:4px}
-  .q{font-size:20px;font-weight:700;line-height:1.35;margin:10px 0 14px}
-  .opt{border:2px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px;font-size:16px;cursor:pointer;background:#fff;text-align:left;width:100%;color:var(--ink)}
-  .opt:hover{border-color:#b9c3d6}
-  .opt.correct{border-color:var(--green);background:var(--green-soft)} .opt.wrong{border-color:var(--red);background:var(--red-soft)}
+  .btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:52px;border:0;border-radius:16px;padding:14px;font-size:16px;font-weight:800;
+       letter-spacing:.3px;cursor:pointer;margin-top:12px;transition:transform .08s,box-shadow .08s}
+  .btn:active{transform:translateY(4px);box-shadow:none!important}
+  .primary{background:var(--green);color:#fff;box-shadow:0 4px 0 var(--green-edge)}
+  .primary.red{background:var(--red);box-shadow:0 4px 0 var(--red-edge)}
+  .secondary{background:#fff;color:var(--blue);border:2px solid #c9d6f5;box-shadow:0 4px 0 #c9d6f5}
+  .ghost{background:transparent;color:var(--muted);font-weight:800;min-height:44px}
+  .link{background:none;border:0;color:var(--blue);font-size:14px;font-weight:800;cursor:pointer;padding:12px 0 0;display:block;margin:0 auto;min-height:44px}
+  .top{display:flex;align-items:center;gap:12px;padding:8px 16px;min-height:52px}
+  .x{width:44px;height:44px;margin-left:-10px;display:grid;place-items:center;cursor:pointer;color:var(--muted);border:0;background:none;border-radius:12px}
+  .bar{flex:1;height:16px;background:#e5e9f0;border-radius:99px;overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--green);border-radius:99px;transition:width .35s ease-out;position:relative;min-width:16px}
+  .bar i::after{content:"";position:absolute;top:4px;left:8px;right:8px;height:4px;border-radius:4px;background:rgba(255,255,255,.3)}
+  .skip{border:0;background:none;color:var(--muted);font-size:14px;font-weight:800;cursor:pointer;min-height:44px;padding:0 4px}
+  .qhead{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);font-weight:800;margin-top:2px;text-transform:uppercase;letter-spacing:.04em}
+  .qhead .link{text-transform:none;letter-spacing:0}
+  .q{font-size:20px;font-weight:800;line-height:28px;margin:14px 0 16px}
+  .opt{display:flex;justify-content:space-between;align-items:center;gap:10px;border:2px solid var(--line);border-radius:16px;padding:13px 16px;margin-bottom:12px;font-size:16px;
+       line-height:22px;font-weight:700;cursor:pointer;background:#fff;text-align:left;width:100%;color:var(--ink);min-height:54px;box-shadow:0 3px 0 var(--line);
+       transition:transform .08s,box-shadow .08s}
+  .opt:active:not([disabled]){transform:translateY(3px);box-shadow:none}
+  .opt.correct{border-color:var(--green);background:var(--green-soft);box-shadow:0 3px 0 var(--green)}
+  .opt.wrong{border-color:var(--red);background:var(--red-soft);box-shadow:0 3px 0 var(--red);animation:shake .3s}
+  .opt.correct::after{content:"✓ Correct";font-size:13px;font-weight:800;color:var(--green);white-space:nowrap}
+  .opt.wrong::after{content:"Your answer";font-size:13px;font-weight:800;color:var(--red);white-space:nowrap}
   .opt[disabled]{cursor:default}
-  .feedback{position:absolute;left:0;right:0;bottom:0;padding:18px 20px 22px;border-radius:22px 22px 0 0;display:none;max-height:72%;overflow-y:auto;
-            box-shadow:0 -8px 24px rgba(0,0,0,.08)}
-  .feedback.good{background:var(--green-soft)} .feedback.bad{background:var(--red-soft)}
-  .feedback h3{margin:0 0 8px;font-size:18px} .good h3{color:var(--green)} .bad h3{color:var(--red)}
-  .def{background:#fff;border-radius:12px;padding:12px;font-size:14px;line-height:1.45}
-  .def b{display:block;margin-bottom:4px}
-  .undo{font-size:13px;color:var(--muted);text-decoration:underline;cursor:pointer;background:none;border:0;padding:6px 0 0}
-  .thumb{position:relative;border-radius:14px;overflow:hidden;cursor:pointer}
+  .opt[disabled]:not(.correct):not(.wrong){opacity:.55}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}50%{transform:translateX(4px)}75%{transform:translateX(-4px)}}
+  .feedback{display:none;flex-shrink:0;margin-top:auto;padding:18px 20px calc(20px + env(safe-area-inset-bottom));border-radius:22px 22px 0 0;animation:slideup .22s ease-out}
+  @keyframes slideup{from{transform:translateY(30px);opacity:0}to{transform:none;opacity:1}}
+  .feedback.good{background:var(--green-soft);border-top:2px solid var(--green-line)} .feedback.bad{background:var(--red-soft);border-top:2px solid var(--red-line)}
+  .feedback h3{margin:0 0 10px;font-size:20px;line-height:26px;font-weight:800;display:flex;gap:8px;align-items:center}
+  .good h3{color:var(--green)} .bad h3{color:var(--red)}
+  .def{background:#fff;border-radius:14px;padding:12px 14px;font-size:15px;line-height:22px}
+  .def b{display:block;margin-bottom:4px;font-weight:800}
+  .undo{font-size:14px;color:var(--muted);text-decoration:underline;cursor:pointer;background:none;border:0;padding:10px 0 0;min-height:40px;font-weight:700}
+  .thumb{position:relative;border-radius:16px;overflow:hidden;cursor:pointer}
   .thumb img{width:100%;display:block} .play{position:absolute;inset:0;display:grid;place-items:center}
-  .play span{width:56px;height:56px;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;display:grid;place-items:center;font-size:22px}
-  .dur{position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,.65);color:#fff;font-size:12px;padding:2px 6px;border-radius:6px}
-  .memory{background:var(--blue-soft);border-radius:12px;padding:10px 12px;font-size:14px;margin-top:10px}
+  .play span,.tap span{width:60px;height:60px;border-radius:50%;background:rgba(15,23,42,.65);color:#fff;display:grid;place-items:center}
+  .dur{position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,.65);color:#fff;font-size:12px;font-weight:800;padding:2px 7px;border-radius:6px}
+  .memory{background:var(--blue-soft);border-radius:14px;padding:12px 14px;font-size:14px;line-height:20px;margin-top:12px}
   video{width:100%;border-radius:12px;background:#000;display:block}
-  /* phone view of the story: crop to the picture part of the frame, show the text as real text below */
-  .vbox{position:relative;width:100%;aspect-ratio:880/495;overflow:hidden;border-radius:12px;background:#000}
+  .vbox{position:relative;width:100%;aspect-ratio:880/495;overflow:hidden;border-radius:16px;background:#000}
   .vbox video{width:145.4545%;max-width:none;margin-top:-4.5455%;border-radius:0}
   video:fullscreen{width:100%!important;margin:0!important} video:-webkit-full-screen{width:100%!important;margin:0!important}
-  .tap{position:absolute;inset:0;display:none;place-items:center;background:rgba(0,0,0,.28);cursor:pointer}
-  .tap span{width:64px;height:64px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;display:grid;place-items:center;font-size:26px}
-  .cap{margin-top:10px;background:#141b2a;color:#fff;border-radius:14px;padding:12px 14px;border-left:5px solid var(--blue)}
-  .cap .h{font-weight:800;font-size:17px;letter-spacing:.2px}
-  .cap .s{font-size:13px;color:#b8c2d3;margin-top:3px;line-height:1.35}
-  .cap .x{font-size:16px;line-height:1.45;margin-top:10px;min-height:4.4em}
-  .cap .x.story{font-style:italic;color:#dfe5ef}
-  .vtools{display:flex;gap:8px;margin-top:10px}
-  .vtools button{flex:1;border:1px solid var(--line);background:#fff;border-radius:12px;padding:11px 6px;font-size:14px;font-weight:600;cursor:pointer;color:var(--ink)}
-  .chapters button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 12px;font-size:14px;cursor:pointer;margin:8px 6px 0 0;color:var(--ink)}
-  .big{font-size:56px;text-align:center;margin-top:24px}
+  .tap{position:absolute;inset:0;display:none;place-items:center;background:rgba(0,0,0,.2);cursor:pointer}
+  .cap{margin-top:12px;background:var(--subtle);color:var(--ink);border-radius:16px;padding:14px 16px;border-left:4px solid var(--muted)}
+  .cap .h{font-weight:800;font-size:16px;line-height:22px}
+  .cap .s{font-size:14px;color:var(--muted);margin-top:2px;line-height:20px;font-weight:600}
+  .cap .x{font-size:16px;line-height:24px;margin-top:10px;min-height:4.5em;color:var(--ink)}
+  .cap .x.story{font-style:italic}
+  .vtools{display:flex;gap:8px;margin-top:12px}
+  .vtools button{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;min-height:46px;border:2px solid var(--line);background:#fff;border-radius:14px;
+                 font-size:14px;font-weight:800;cursor:pointer;color:var(--ink);box-shadow:0 3px 0 var(--line)}
+  .vtools button:active{transform:translateY(3px);box-shadow:none}
+  .chapters{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .chapters button{border:2px solid var(--line);background:#fff;border-radius:12px;padding:10px 12px;font-size:14px;font-weight:700;cursor:pointer;color:var(--ink);min-height:44px}
   .center{text-align:center}
-  .due{display:flex;justify-content:space-between;align-items:center;font-size:14px;border-bottom:1px solid var(--line);padding:11px 0;cursor:pointer}
-  .due span:last-child{color:var(--blue);font-weight:600}
-  /* today card with steps */
-  .today{border-radius:18px;background:var(--amber-soft);padding:16px;margin-top:4px}
+  .due{display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:700;border-bottom:2px solid var(--line);padding:12px 0;cursor:pointer;min-height:48px}
+  .due span:last-child{color:var(--blue);font-weight:800;font-size:14px;display:flex;align-items:center;gap:4px}
+  .today{border-radius:20px;background:var(--amber-soft);padding:16px;margin-top:4px;border:2px solid var(--amber-line);box-shadow:0 4px 0 var(--amber-line)}
   .today .head{display:flex;gap:14px;align-items:center}
   .steps{margin-top:12px}
-  .step{display:flex;gap:10px;align-items:center;background:#fff;border-radius:12px;padding:10px 12px;margin-top:8px;font-size:14px}
-  .step .n{width:26px;height:26px;border-radius:50%;background:var(--line);display:grid;place-items:center;font-weight:700;font-size:13px;flex:none}
+  .step{display:flex;gap:12px;align-items:center;background:#fff;border-radius:14px;padding:10px 12px;margin-top:8px;font-size:14px;line-height:20px;border:2px solid transparent}
+  .step .n{width:28px;height:28px;border-radius:50%;background:var(--line);display:grid;place-items:center;font-weight:800;font-size:14px;flex:none}
   .step.done .n{background:var(--green);color:#fff}
-  .step.next{outline:2px solid var(--green)}
-  .scenechip{display:inline-block;font-size:12px;font-weight:700;color:var(--blue);background:var(--blue-soft);border-radius:999px;padding:3px 10px}
-  .hint{font-size:14px;color:var(--muted);margin-top:10px;line-height:1.4}
-  .misslist .due span:first-child{font-weight:600}
+  .step.next{border-color:var(--green)}
+  .step.next .n{background:var(--green);color:#fff}
+  .scenechip{display:inline-block;font-size:12px;font-weight:800;color:var(--blue);background:var(--blue-soft);border-radius:999px;padding:4px 10px;text-transform:uppercase;letter-spacing:.04em}
+  .hint{font-size:14px;color:var(--muted);margin-top:12px;line-height:20px;font-weight:600}
+  .badge{width:96px;height:96px;border-radius:50%;background:var(--green);margin:28px auto 12px;display:grid;place-items:center;box-shadow:0 6px 0 var(--green-edge);
+         animation:pop .45s ease-out;position:relative}
+  .badge i{position:absolute;width:10px;height:10px;border-radius:3px}
+  @keyframes pop{0%{transform:scale(.6);opacity:0}60%{transform:scale(1.1);opacity:1}100%{transform:scale(1)}}
+  #summary>.pad{min-height:100%;display:flex;flex-direction:column}
+  .summary-actions{margin-top:auto;padding-top:20px}
+  .misslist .due span:first-child{font-weight:800}
+  #question{display:none} #question.on{display:flex}
   /* On a real phone: drop the fake phone frame and fill the screen */
   @media (max-width:500px){
     body{padding:0;background:var(--phone)}
@@ -100,12 +136,13 @@
   <!-- HOME -->
   <section class="screen on" id="home">
     <div class="pad">
-      <div class="sub">CS6750 Human-Computer Interaction</div>
-      <h1>Good evening</h1>
+      <div class="brand"><span class="logo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M9 10l2 2 4-4"/></svg></span>Study Buddy</div>
+      <div class="sub" style="margin-top:10px">CS6750 Human-Computer Interaction</div>
+      <h1>Your study session</h1>
       <div class="stats">
-        <div class="stat"><b id="week">4 of 7</b><span>days this week</span></div>
-        <div class="stat"><b id="xp">120</b><span>XP</span></div>
-        <div class="stat"><b id="duecount">1</b><span>lessons today</span></div>
+        <div class="stat"><b><svg class="icon" style="color:var(--green)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4M9 15l2 2 4-4"/></svg><span id="week">4 of 7</span></b><span>days this week</span></div>
+        <div class="stat"><b><svg class="icon" viewBox="0 0 24 24" fill="#f59e0b"><path d="M13.5 2L4 14h7l-1.5 8L19 10h-7z"/></svg><span id="xp">120</span></b><span>XP</span></div>
+        <div class="stat"><b><svg class="icon" style="color:var(--blue)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg><span id="duecount">1</span></b><span>lessons today</span></div>
       </div>
       <div class="today">
         <div class="head">
@@ -125,44 +162,44 @@
         <div class="row" style="justify-content:space-between"><b>Slips: action and memory</b><span class="pill" id="lecpill">New story</span></div>
         <div class="sub" id="lecsub">Story video and 10 practice questions</div>
       </div>
-      <div class="card" style="opacity:.6"><b>Mental models</b><div class="sub">Review due tomorrow</div></div>
-      <div class="card" style="opacity:.6"><b>Feedback cycles</b><div class="sub">Up to date</div></div>
+      <div class="card off"><b>Mental models</b><div class="sub">Review due tomorrow</div></div>
+      <div class="card off"><b>Feedback cycles</b><div class="sub">Up to date</div></div>
     </div>
   </section>
 
   <!-- LECTURE HUB -->
   <section class="screen" id="lecture">
-    <div class="top"><button class="x" onclick="go('home')" aria-label="Back">‹</button><b>Slips: action and memory</b></div>
+    <div class="top"><button class="x" onclick="go('home')" aria-label="Back"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><b>Slips: action and memory</b></div>
     <div class="pad" style="padding-top:4px">
       <div class="thumb" onclick="openVideo(0)">
         <img src="assets/v2_s01.jpg" alt="Story video">
-        <div class="play"><span>▶</span></div><div class="dur">1:59</div>
+        <div class="play"><span><svg width="26" height="26" viewBox="0 0 24 24" fill="#fff"><path d="M8 5.5v13l10.5-6.5z"/></svg></span></div><div class="dur">1:59</div>
       </div>
       <div class="sub" style="margin-top:6px">Watch the whole story at once</div>
       <div class="memory"><b>Memory line:</b> “Slips happen in the AM.” A for Action-based slip, M for Memory-lapse slip.</div>
       <button class="btn primary" id="lecbtn" onclick="mainAction()">Start lesson</button>
       <h2 style="margin-top:20px">Topics in this lecture</h2>
       <div class="sub">Tap a topic to watch its scene.</div>
-      <div class="due" onclick="openVideo(T.s03)"><span>What is a slip</span><span>▶ scene</span></div>
-      <div class="due" onclick="openVideo(T.s04)"><span>A · Action-based slip</span><span>▶ scene</span></div>
-      <div class="due" onclick="openVideo(T.s06)"><span>M · Memory-lapse slip</span><span>▶ scene</span></div>
-      <div class="due" onclick="openVideo(T.s10)"><span>Preventing slips</span><span>▶ scene</span></div>
+      <div class="due" onclick="openVideo(T.s03)"><span>What is a slip</span><span><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5v14l12-7z"/></svg> Scene</span></div>
+      <div class="due" onclick="openVideo(T.s04)"><span>A · Action-based slip</span><span><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5v14l12-7z"/></svg> Scene</span></div>
+      <div class="due" onclick="openVideo(T.s06)"><span>M · Memory-lapse slip</span><span><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5v14l12-7z"/></svg> Scene</span></div>
+      <div class="due" onclick="openVideo(T.s10)"><span>Preventing slips</span><span><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5v14l12-7z"/></svg> Scene</span></div>
     </div>
   </section>
 
   <!-- LESSON: story scene by scene -->
   <section class="screen" id="lesson">
-    <div class="top"><button class="x" onclick="leave()" aria-label="Leave lesson">✕</button><div class="bar"><i id="lprog" style="width:0%"></i></div></div>
+    <div class="top"><button class="x" onclick="leave()" aria-label="Leave lesson"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button><div class="bar"><i id="lprog" style="width:0%"></i></div></div>
     <div class="pad" style="padding-top:2px">
       <span class="scenechip" id="lchip">Scene 1 of 4</span>
       <h2 style="margin:8px 0 10px" id="ltitle"></h2>
       <div class="vbox"><video id="lvid" src="assets/slips_story_v2.mp4" playsinline preload="auto" onclick="toggle('lvid')"></video>
-        <div class="tap" id="lvid_tap" onclick="toggle('lvid')"><span>▶</span></div></div>
+        <div class="tap" id="lvid_tap" onclick="toggle('lvid')"><span><svg width="26" height="26" viewBox="0 0 24 24" fill="#fff"><path d="M8 5.5v13l10.5-6.5z"/></svg></span></div></div>
       <div class="cap" id="lvid_cap"><div class="h"></div><div class="s"></div><div class="x"></div></div>
       <div class="vtools">
-        <button onclick="replaySeg()">↺ Replay</button>
-        <button onclick="fullscreen('lvid')">⛶ Full screen</button>
-        <button onclick="endSeg()">Skip ›</button>
+        <button onclick="replaySeg()"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>Replay</button>
+        <button onclick="fullscreen('lvid')"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>Full screen</button>
+        <button onclick="endSeg()">Skip<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
       </div>
       <div class="hint" id="lhint">Watch the scene. A question about it comes right after. Full screen shows the original video with its text panel.</div>
     </div>
@@ -170,12 +207,12 @@
 
   <!-- FREE VIDEO -->
   <section class="screen" id="video">
-    <div class="top"><button class="x" onclick="closeVideo()" aria-label="Back">‹</button><b id="vtitle">Story video</b></div>
+    <div class="top"><button class="x" onclick="closeVideo()" aria-label="Back"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><b id="vtitle">Story video</b></div>
     <div class="pad" style="padding-top:4px">
       <div class="vbox"><video id="vid" src="assets/slips_story_v2.mp4" playsinline preload="metadata" onclick="toggle('vid')"></video>
-        <div class="tap" id="vid_tap" onclick="toggle('vid')"><span>▶</span></div></div>
+        <div class="tap" id="vid_tap" onclick="toggle('vid')"><span><svg width="26" height="26" viewBox="0 0 24 24" fill="#fff"><path d="M8 5.5v13l10.5-6.5z"/></svg></span></div></div>
       <div class="cap" id="vid_cap"><div class="h"></div><div class="s"></div><div class="x"></div></div>
-      <div class="vtools"><button onclick="toggle('vid')" id="vid_pp">❚❚ Pause</button><button onclick="fullscreen('vid')">⛶ Full screen</button></div>
+      <div class="vtools"><button onclick="toggle('vid')" id="vid_pp">Pause</button><button onclick="fullscreen('vid')"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>Full screen</button></div>
       <div class="chapters">
         <button onclick="seek(T.s01)">Start</button>
         <button onclick="seek(T.s03)">What is a slip</button>
@@ -189,10 +226,10 @@
 
   <!-- QUESTION -->
   <section class="screen" id="question">
-    <div class="top"><button class="x" onclick="leave()" aria-label="Leave lesson">✕</button><div class="bar"><i id="prog" style="width:0%"></i></div>
+    <div class="top"><button class="x" onclick="leave()" aria-label="Leave lesson"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button><div class="bar"><i id="prog" style="width:0%"></i></div>
       <button class="skip" id="skipq" onclick="skipQ()">Skip</button></div>
     <div class="pad" style="padding-top:0">
-      <div class="qhead"><span id="qcount">Slips · 1/10</span><button class="link" style="margin:0;padding:0" id="watchq" onclick="watchScene()">▶ Watch scene</button></div>
+      <div class="qhead"><span id="qcount">Slips · 1/10</span><button class="link" style="margin:0;padding:0" id="watchq" onclick="watchScene()"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5v14l12-7z"/></svg> Watch scene</button></div>
       <img id="qimg" src="" alt="" style="width:100%;border-radius:12px;display:none;margin-top:10px">
       <div class="q" id="qtext"></div>
       <div id="opts"></div>
@@ -200,7 +237,7 @@
     <div class="feedback" id="fb">
       <h3 id="fbtitle"></h3>
       <div class="def" id="fbdef"></div>
-      <button class="btn secondary" id="replay">▶ Replay the scene</button>
+      <button class="btn secondary" id="replay"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>Replay the scene</button>
       <button class="btn primary" id="next" onclick="nextStep()">Continue</button>
       <button class="undo" id="undo" onclick="undo()">Misclicked? Undo</button>
     </div>
@@ -209,18 +246,22 @@
   <!-- SUMMARY -->
   <section class="screen" id="summary">
     <div class="pad center">
-      <div class="big">🎉</div>
+      <div class="badge"><svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+        <i style="background:#f59e0b;left:-22px;top:18px;transform:rotate(20deg)"></i><i style="background:#1d4ed8;right:-20px;top:8px;transform:rotate(-15deg)"></i>
+        <i style="background:#b42318;left:-8px;bottom:-6px"></i><i style="background:#f59e0b;right:-14px;bottom:4px;transform:rotate(40deg)"></i>
+        <i style="background:#86d3a0;left:40px;top:-18px"></i></div>
       <h1 id="sumtitle">Lesson complete</h1>
       <div class="sub" id="score"></div>
       <div class="stats">
-        <div class="stat"><b id="xpgain">+0</b><span>XP</span></div>
-        <div class="stat"><b id="week2">5 of 7</b><span>days this week</span></div>
+        <div class="stat"><b><svg class="icon" viewBox="0 0 24 24" fill="#f59e0b"><path d="M13.5 2L4 14h7l-1.5 8L19 10h-7z"/></svg><span id="xpgain">+0</span></b><span>XP</span></div>
+        <div class="stat"><b><svg class="icon" style="color:var(--green)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4M9 15l2 2 4-4"/></svg><span id="week2">5 of 7</span></b><span>days this week</span></div>
         <div class="stat"><b id="goal2">✓</b><span>daily goal</span></div>
       </div>
       <div class="memory" style="text-align:left" id="comeback"></div>
       <div class="misslist" style="text-align:left" id="misslist"></div>
+      <div class="summary-actions">
       <button class="btn primary" onclick="go('home')">Back to home</button>
-      <button class="btn ghost" onclick="startReview()">Practice again</button>
+      <button class="btn ghost" onclick="startReview()">Practice again</button></div>
     </div>
   </section>
 </div>
@@ -287,8 +328,8 @@ let plan=[], step=0, nQ=0, qNo=0, right=0, gained=0, missed=[], last=null, pushe
 const $=id=>document.getElementById(id);
 ['lvid','vid'].forEach(id=>{const v=$(id);
   v.addEventListener('timeupdate',()=>caption(id));
-  v.addEventListener('play',()=>{$(id+'_tap').style.display='none';if($(id+'_pp'))$(id+'_pp').textContent='❚❚ Pause'});
-  v.addEventListener('pause',()=>{if($(id).closest('.screen').classList.contains('on'))$(id+'_tap').style.display='grid';if($(id+'_pp'))$(id+'_pp').textContent='▶ Play'});});
+  v.addEventListener('play',()=>{$(id+'_tap').style.display='none';if($(id+'_pp'))$(id+'_pp').textContent='Pause'});
+  v.addEventListener('pause',()=>{if($(id).closest('.screen').classList.contains('on'))$(id+'_tap').style.display='grid';if($(id+'_pp'))$(id+'_pp').textContent='Play'});});
 function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));if(id==='home')renderHome();
   if(id!=='lesson'){$('lvid').pause()} if(id!=='video'){$('vid').pause()}}
 function renderHome(){
@@ -337,7 +378,10 @@ function answer(k){const s=plan[step],d=s.q;last=k;const ok=k===d.a;pushed=false
   else{missed.push(d);if(!s.second){plan.push({t:'q',q:d,second:true});pushed=true}}
   document.querySelectorAll('.opt').forEach((b,j)=>{b.disabled=true;if(j===d.a)b.classList.add('correct');else if(j===k)b.classList.add('wrong')});
   const fb=$('fb');fb.className='feedback '+(ok?'good':'bad');fb.style.display='block';
-  $('fbtitle').textContent=ok?'Correct! +'+(s.second?5:10)+' XP':(s.second?'Not quite, this one comes back in your next review':'Not quite, you get a second try at the end');
+  const ic=ok?'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" stroke-width="2.5"/><path d="M7.5 12.5l3 3 6-6"/></svg>':'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><circle cx="12" cy="12" r="10" stroke-width="2.5"/><path d="M8.5 8.5l7 7M15.5 8.5l-7 7"/></svg>';
+  $('fbtitle').innerHTML=ic+'<span>'+(ok?'Correct! +'+(s.second?5:10)+' XP':(s.second?'Not quite. It comes back in your next review':'Not quite. You get a second try at the end'))+'</span>';
+  $('next').className='btn primary'+(ok?'':' red');
+  setTimeout(()=>fb.scrollIntoView({behavior:'smooth',block:'end'}),60);
   $('fbdef').innerHTML=`<b>${d.term}</b>${d.def}`;
   const r=$('replay');r.style.display=ok?'none':'block';r.onclick=()=>openVideo(T[d.scene],true);
   $('undo').style.display=ok?'none':'inline-block';$('skipq').style.display='none';}
@@ -352,7 +396,7 @@ function finish(){
   xp+=gained;if(!weekDone){week++;weekDone=true}
   $('sumtitle').textContent=mode==='lesson'?'Lesson complete':'Review complete';
   $('score').textContent=`${right} of ${nQ} right on the first try`;
-  $('xpgain').textContent='+'+gained;$('week2').textContent=`${week} of 7`;$('goal2').textContent=doneToday>=GOAL?'✓':`${Math.min(doneToday,GOAL)}/${GOAL}`;
+  (()=>{const el=$('xpgain'),t0=performance.now();const f=n=>{const k=Math.min(1,(n-t0)/600);el.textContent='+'+Math.round(gained*k);if(k<1)requestAnimationFrame(f)};el.textContent='+0';requestAnimationFrame(f)})();$('week2').textContent=`${week} of 7`;$('goal2').textContent=doneToday>=GOAL?'✓':`${Math.min(doneToday,GOAL)}/${GOAL}`;
   const uniq=[];missed.forEach(d=>{if(!uniq.find(u=>u.term===d.term))uniq.push(d)});
   $('comeback').innerHTML=uniq.length?'<b>Coming back sooner:</b> questions you missed return in your next review. Rewatch the scene now:':'<b>All correct.</b> These questions come back in a few days to keep them fresh.';
   $('misslist').innerHTML=uniq.map(d=>`<div class="due" onclick="openVideo(${T[d.scene]})"><span>${d.term}</span><span>▶ Rewatch</span></div>`).join('');
